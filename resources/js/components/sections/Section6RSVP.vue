@@ -12,10 +12,10 @@
             <p v-if="!submitted" class="reveal mt-3 text-center font-sans text-sm text-wedding-brown-warm/90 md:text-base" lang="vi">
                 Rất mong được đón bạn trong ngày vui của chúng mình.
             </p>
-            <!-- Card cảm ơn sau khi xác nhận thành công -->
+            <!-- Card cảm ơn sau khi xác nhận thành công (không dùng .reveal vì nội dung mới sau submit, observer không chạy lại) -->
             <div
                 v-if="submitted"
-                class="reveal mt-8 rounded-2xl border border-wedding-sage/60 bg-white/95 p-8 shadow-md md:p-10 text-center"
+                class="mt-8 rounded-2xl border border-wedding-sage/60 bg-white/95 p-8 shadow-md md:p-10 text-center"
             >
                 <p class="font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl" lang="vi">
                     Cảm ơn bạn đã xác nhận!
