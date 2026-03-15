@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -7,22 +7,40 @@
 @source '../**/*.js';
 @source '../**/*.vue';
 
+/* Ẩn scrollbar mặc định của browser */
+html,
+body {
+    overflow: hidden;
+}
+/* Ẩn scrollbar trên phần tử cuộn (main) nhưng vẫn cuộn được */
+.scrollbar-hide {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge */
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-script: 'Great Vibes', cursive;
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-script: "Great Vibes", cursive;
     /* Wedding palette */
-    --color-wedding-gold: #B59E6B;
-    --color-wedding-sage: #A7B39B;
-    --color-wedding-cream: #F3F4ED;
-    --color-wedding-brown: #4A3F35;
+    --color-wedding-gold: #b59e6b;
+    --color-wedding-sage: #a7b39b;
+    --color-wedding-cream: #f3f4ed;
+    --color-wedding-brown: #4a3f35;
 }
 
 /* Scroll reveal */
 .reveal {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transition:
+        opacity 0.5s ease-out,
+        transform 0.5s ease-out;
 }
 .reveal.reveal-visible {
     opacity: 1;
@@ -31,13 +49,31 @@
 
 /* Wedding palette utilities (Tailwind v4 @theme variables) */
 @layer utilities {
-    .bg-wedding-sage { background-color: var(--color-wedding-sage); }
-    .bg-wedding-cream { background-color: var(--color-wedding-cream); }
-    .bg-wedding-brown { background-color: var(--color-wedding-brown); }
-    .bg-wedding-gold { background-color: var(--color-wedding-gold); }
-    .text-wedding-gold { color: var(--color-wedding-gold); }
-    .text-wedding-cream { color: var(--color-wedding-cream); }
-    .text-wedding-brown { color: var(--color-wedding-brown); }
-    .font-script { font-family: var(--font-script); }
-    .ring-wedding-gold { --tw-ring-color: var(--color-wedding-gold); }
+    .bg-wedding-sage {
+        background-color: var(--color-wedding-sage);
+    }
+    .bg-wedding-cream {
+        background-color: var(--color-wedding-cream);
+    }
+    .bg-wedding-brown {
+        background-color: var(--color-wedding-brown);
+    }
+    .bg-wedding-gold {
+        background-color: var(--color-wedding-gold);
+    }
+    .text-wedding-gold {
+        color: var(--color-wedding-gold);
+    }
+    .text-wedding-cream {
+        color: var(--color-wedding-cream);
+    }
+    .text-wedding-brown {
+        color: var(--color-wedding-brown);
+    }
+    .font-script {
+        font-family: var(--font-script);
+    }
+    .ring-wedding-gold {
+        --tw-ring-color: var(--color-wedding-gold);
+    }
 }
