@@ -37,7 +37,8 @@ export function useScrollReveal(options = {}) {
         });
       }
 
-      const elements = document.querySelectorAll(SELECTOR);
+      const allReveal = document.querySelectorAll(SELECTOR);
+      const elements = Array.from(allReveal).filter((el) => !el.closest('[data-no-reveal]'));
 
       if (DEBUG) {
         console.log('[ScrollReveal] elements with .reveal:', elements.length);
