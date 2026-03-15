@@ -1,12 +1,12 @@
 <template>
     <section
         data-section
-        class="section3 relative min-h-screen w-full shrink-0 snap-start snap-always overflow-hidden bg-wedding-sage px-3 py-6 md:px-8 md:py-12"
+        class="section3 relative h-screen w-full shrink-0 snap-start snap-always overflow-hidden bg-wedding-sage px-3 py-4 md:px-6 md:py-6"
     >
-        <div class="section3-outer w-full min-w-0">
+        <div class="section3-outer w-full min-w-0 h-full">
             <!-- 1 card: ảnh chú rể | thông tin cả hai | ảnh cô dâu -->
             <div
-                class="section3-card reveal grid min-w-0 grid-cols-3 grid-rows-1 aspect-[3/2] overflow-hidden rounded-2xl shadow-lg md:aspect-[2/1] md:max-h-[620px] lg:max-h-[72vh]"
+                class="section3-card reveal grid min-w-0 grid-cols-3 grid-rows-1 h-full min-h-0 overflow-hidden rounded-2xl shadow-lg"
             >
                 <div
                     class="section3-img-wrap section3-img-wrap--left relative min-h-0 min-w-0 overflow-hidden bg-wedding-cream-warm/30"
@@ -88,11 +88,10 @@ import section3Image from "../../elements/section3.jpg";
 }
 @media (min-width: 768px) {
     .section3-outer {
-        width: 92%;
-        max-width: 80rem;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
+        width: 96%;
+        max-width: none;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 .section3-img-wrap {
