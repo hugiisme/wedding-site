@@ -22,7 +22,7 @@
                 >
                     <div class="section3-groom">
                         <p
-                            class="font-serif text-base font-semibold text-wedding-brown-warm md:text-xl"
+                            class="font-sans text-base font-semibold text-wedding-brown-warm md:text-xl tracking-tight"
                         >
                             Bùi Tiến Thành
                         </p>
@@ -35,7 +35,6 @@
                             class="mt-1.5 text-xs text-wedding-brown-warm/70 md:mt-2 md:text-sm"
                         >
                             Ngày sinh: 03/05/2000
-                            <span class="text-wedding-brown-warm/50">—</span>
                         </p>
                     </div>
                     <div
@@ -44,7 +43,7 @@
                     />
                     <div class="section3-bride text-right">
                         <p
-                            class="font-serif text-base font-semibold text-wedding-brown-warm md:text-xl"
+                            class="font-sans text-base font-semibold text-wedding-brown-warm md:text-xl tracking-tight"
                         >
                             Nguyễn Anh Thư
                         </p>
