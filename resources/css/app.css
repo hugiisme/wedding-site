@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -27,11 +27,17 @@ body {
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
     --font-script: "Great Vibes", cursive;
-    /* Wedding palette */
-    --color-wedding-gold: #b59e6b;
-    --color-wedding-sage: #a7b39b;
-    --color-wedding-cream: #f3f4ed;
+    --font-dm-serif: "DM Serif Display", serif;
+    /* Wedding palette (mới – xanh lá nhạt) */
+    --color-wedding-cream: #f2f1eb;
+    --color-wedding-sage: #ced0ab;
+    --color-wedding-gold: #b7c182;
     --color-wedding-brown: #4a3f35;
+    /* Wedding palette cũ (ấm – gold/sage cũ) */
+    --color-wedding-cream-warm: #f3f4ed;
+    --color-wedding-sage-warm: #a7b39b;
+    --color-wedding-gold-warm: #b59e6b;
+    --color-wedding-brown-warm: #4a3f35;
 }
 
 /* Scroll reveal */
@@ -47,8 +53,33 @@ body {
     transform: translateY(0);
 }
 
+/* Reveal ảnh (section 2): chỉ fade opacity, không dịch chuyển */
+.reveal.reveal--image {
+    transform: none;
+    transition: opacity 0.6s ease-out;
+}
+.reveal.reveal--image.reveal-visible {
+    transform: none;
+}
+
+/* Section 6 RSVP form: ẩn radio mặc định, trạng thái chọn thể hiện bằng card */
+.rsvp-radio-card {
+    position: relative;
+}
+.rsvp-radio-card .rsvp-radio-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    accent-color: var(--color-wedding-gold-warm);
+}
+
 /* Wedding palette utilities (Tailwind v4 @theme variables) */
 @layer utilities {
+    /* Palette mới */
     .bg-wedding-sage {
         background-color: var(--color-wedding-sage);
     }
@@ -70,10 +101,44 @@ body {
     .text-wedding-brown {
         color: var(--color-wedding-brown);
     }
+    /* Palette cũ (warm) */
+    .bg-wedding-sage-warm {
+        background-color: var(--color-wedding-sage-warm);
+    }
+    .bg-wedding-cream-warm {
+        background-color: var(--color-wedding-cream-warm);
+    }
+    .bg-wedding-brown-warm {
+        background-color: var(--color-wedding-brown-warm);
+    }
+    .bg-wedding-gold-warm {
+        background-color: var(--color-wedding-gold-warm);
+    }
+    .text-wedding-gold-warm {
+        color: var(--color-wedding-gold-warm);
+    }
+    .text-wedding-cream-warm {
+        color: var(--color-wedding-cream-warm);
+    }
+    .text-wedding-brown-warm {
+        color: var(--color-wedding-brown-warm);
+    }
+    .border-wedding-gold-warm {
+        border-color: var(--color-wedding-gold-warm);
+    }
+    .border-wedding-brown-warm {
+        border-color: var(--color-wedding-brown-warm);
+    }
     .font-script {
         font-family: var(--font-script);
     }
+    .font-dm-serif {
+        font-family: var(--font-dm-serif);
+    }
     .ring-wedding-gold {
         --tw-ring-color: var(--color-wedding-gold);
+    }
+    .ring-wedding-gold-warm {
+        --tw-ring-color: var(--color-wedding-gold-warm);
     }
 }

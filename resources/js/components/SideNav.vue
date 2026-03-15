@@ -11,8 +11,8 @@
       :class="[
         'shrink-0 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-wedding-brown focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
         i === activeIndex
-          ? 'h-8 w-1.5 border-0 border-transparent bg-wedding-gold shadow-[0_0_0_1px_rgba(74,63,53,0.15)] md:h-10 md:w-2'
-          : 'h-2.5 w-2.5 border-2 border-wedding-brown bg-wedding-cream shadow-[0_0_0_1px_rgba(74,63,53,0.2)] hover:border-wedding-brown hover:bg-wedding-cream md:h-3 md:w-3'
+          ? 'h-8 w-1.5 border-0 border-transparent bg-wedding-gold-warm shadow-[0_0_0_1px_rgba(74,63,53,0.2)] md:h-10 md:w-2'
+          : 'h-2.5 w-2.5 border-2 border-wedding-brown bg-wedding-cream shadow-[0_0_0_1px_rgba(74,63,53,0.15)] hover:border-wedding-brown hover:bg-wedding-cream md:h-3 md:w-3'
       ]"
       @click="onClick(i)"
     />

@@ -1,77 +1,74 @@
 <template>
     <section
         data-section
-        class="relative flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center bg-wedding-sage px-4 py-16"
+        class="relative flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center bg-wedding-sage px-6 py-20 md:px-10 md:py-24"
     >
-        <div
-            class="absolute inset-0 opacity-30"
-            style="
-                background-image: url(&quot;data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L50 25 L35 30 L30 45 L25 30 L10 25 L25 20 Z' fill='%23F3F4ED' fill-opacity='0.3'/%3E%3C/svg%3E&quot;);
-            "
-        />
+        <div class="absolute inset-0 opacity-30 section4-pattern" />
         <p
-            class="reveal relative z-10 font-script text-2xl text-wedding-cream md:text-3xl"
+            class="reveal relative z-10 max-w-3xl text-center font-script text-4xl text-wedding-brown-warm md:text-5xl lg:text-6xl"
+            lang="vi"
         >
             Năm ấy chung một bầu trời Chuyên Sư phạm, chỉ còn ...
         </p>
         <div
-            class="reveal relative z-10 mt-8 flex flex-wrap items-center justify-center gap-2 md:gap-4"
+            class="reveal relative z-10 mt-12 flex flex-wrap items-center justify-center gap-4 md:mt-16 md:gap-8"
         >
-            <div class="flex flex-col items-center">
+            <div class="reveal flex flex-col items-center">
                 <span
-                    class="countdown-digit font-mono text-4xl font-bold tracking-tight text-wedding-cream md:text-5xl lg:text-6xl"
+                    class="countdown-digit font-mono text-6xl font-bold tracking-tight text-wedding-brown-warm md:text-7xl lg:text-8xl"
                     >{{ pad(days) }}</span
                 >
                 <span
-                    class="mt-1 text-xs uppercase tracking-wider text-wedding-cream/90 md:text-sm"
+                    class="mt-2 text-base font-medium uppercase tracking-wider text-wedding-brown-warm/90 md:text-lg"
                     >Ngày</span
                 >
             </div>
             <span
-                class="countdown-sep font-mono text-3xl text-wedding-cream/80 md:text-4xl"
+                class="countdown-sep font-mono text-5xl text-wedding-brown-warm/80 md:text-6xl"
                 >:</span
             >
-            <div class="flex flex-col items-center">
+            <div class="reveal flex flex-col items-center">
                 <span
-                    class="countdown-digit font-mono text-4xl font-bold tracking-tight text-wedding-cream md:text-5xl lg:text-6xl"
+                    class="countdown-digit font-mono text-6xl font-bold tracking-tight text-wedding-brown-warm md:text-7xl lg:text-8xl"
                     >{{ pad(hours) }}</span
                 >
                 <span
-                    class="mt-1 text-xs uppercase tracking-wider text-wedding-cream/90 md:text-sm"
+                    class="mt-2 text-base font-medium uppercase tracking-wider text-wedding-brown-warm/90 md:text-lg"
                     >Giờ</span
                 >
             </div>
             <span
-                class="countdown-sep font-mono text-3xl text-wedding-cream/80 md:text-4xl"
+                class="countdown-sep font-mono text-5xl text-wedding-brown-warm/80 md:text-6xl"
                 >:</span
             >
-            <div class="flex flex-col items-center">
+            <div class="reveal flex flex-col items-center">
                 <span
-                    class="countdown-digit font-mono text-4xl font-bold tracking-tight text-wedding-cream md:text-5xl lg:text-6xl"
+                    class="countdown-digit font-mono text-6xl font-bold tracking-tight text-wedding-brown-warm md:text-7xl lg:text-8xl"
                     >{{ pad(minutes) }}</span
                 >
                 <span
-                    class="mt-1 text-xs uppercase tracking-wider text-wedding-cream/90 md:text-sm"
+                    class="mt-2 text-base font-medium uppercase tracking-wider text-wedding-brown-warm/90 md:text-lg"
                     >Phút</span
                 >
             </div>
             <span
-                class="countdown-sep font-mono text-3xl text-wedding-cream/80 md:text-4xl"
+                class="countdown-sep font-mono text-5xl text-wedding-brown-warm/80 md:text-6xl"
                 >:</span
             >
-            <div class="flex flex-col items-center">
+            <div class="reveal flex flex-col items-center">
                 <span
-                    class="countdown-digit font-mono text-4xl font-bold tracking-tight text-wedding-cream md:text-5xl lg:text-6xl"
+                    class="countdown-digit font-mono text-6xl font-bold tracking-tight text-wedding-brown-warm md:text-7xl lg:text-8xl"
                     >{{ pad(seconds) }}</span
                 >
                 <span
-                    class="mt-1 text-xs uppercase tracking-wider text-wedding-cream/90 md:text-sm"
+                    class="mt-2 text-base font-medium uppercase tracking-wider text-wedding-brown-warm/90 md:text-lg"
                     >Giây</span
                 >
             </div>
         </div>
         <p
-            class="reveal relative z-10 mt-8 font-script text-2xl text-wedding-cream md:text-3xl"
+            class="reveal relative z-10 mt-12 max-w-3xl text-center font-script text-4xl text-wedding-brown-warm md:mt-16 md:text-5xl lg:text-6xl"
+            lang="vi"
         >
             sẽ chung một mái nhà!
         </p>
@@ -118,3 +115,9 @@ onMounted(() => {
 });
 onUnmounted(() => clearInterval(interval));
 </script>
+
+<style scoped>
+.section4-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L50 25 L35 30 L30 45 L25 30 L10 25 L25 20 Z' fill='%23f2f1eb' fill-opacity='0.3'/%3E%3C/svg%3E");
+}
+</style>

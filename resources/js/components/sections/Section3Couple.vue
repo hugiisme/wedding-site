@@ -11,7 +11,7 @@
                 class="reveal order-2 flex flex-col items-center md:order-1 md:items-end"
             >
                 <div
-                    class="relative h-72 w-56 overflow-hidden rounded-lg shadow-lg md:h-80 md:w-64"
+                    class="reveal relative h-72 w-56 overflow-hidden rounded-lg shadow-lg md:h-80 md:w-64"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
@@ -20,7 +20,7 @@
                     />
                 </div>
                 <p
-                    class="mt-4 font-serif text-xl font-semibold text-wedding-brown"
+                    class="reveal mt-4 font-serif text-xl font-semibold text-wedding-brown"
                 >
                     Thành
                 </p>
@@ -31,7 +31,7 @@
                 class="reveal order-1 flex flex-col items-center md:order-2 md:items-start"
             >
                 <div
-                    class="relative h-72 w-56 overflow-hidden rounded-lg shadow-lg md:h-80 md:w-64"
+                    class="reveal relative h-72 w-56 overflow-hidden rounded-lg shadow-lg md:h-80 md:w-64"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80"
@@ -40,7 +40,7 @@
                     />
                 </div>
                 <p
-                    class="mt-4 font-serif text-xl font-semibold text-wedding-brown"
+                    class="reveal mt-4 font-serif text-xl font-semibold text-wedding-brown"
                 >
                     Thu
                 </p>

@@ -37,6 +37,9 @@ import Section8Closing from "./components/sections/Section8Closing.vue";
 const scrollContainerRef = ref(null);
 const activeSectionIndex = ref(0);
 
+// Truyền getter để useScrollReveal nhận đúng scroll container sau khi mount
+useScrollReveal({ root: () => scrollContainerRef.value });
+
 function scrollToSection(index) {
     const container = scrollContainerRef.value;
     if (!container) return;
@@ -65,7 +68,6 @@ function updateActiveSection() {
 
 onMounted(() => {
     const container = scrollContainerRef.value;
-    useScrollReveal({ root: container });
     if (container) {
         container.addEventListener("scroll", updateActiveSection, {
             passive: true,

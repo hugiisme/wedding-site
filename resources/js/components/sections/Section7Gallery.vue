@@ -3,7 +3,7 @@
         data-section
         class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center bg-wedding-brown px-4 py-12"
     >
-        <div class="filmstrip relative w-full max-w-4xl">
+        <div class="reveal filmstrip relative w-full max-w-4xl">
             <!-- Film strip top edge (sprocket holes) -->
             <div
                 class="film-edge absolute left-0 right-0 top-0 h-4 bg-black/80"
@@ -24,7 +24,7 @@
                 <button
                     type="button"
                     aria-label="Ảnh trước"
-                    class="shrink-0 rounded-full p-2 text-wedding-cream transition hover:bg-white/10"
+                    class="shrink-0 rounded-full p-2 text-wedding-cream-warm transition hover:bg-white/10"
                     @click="prev"
                 >
                     <svg
@@ -75,7 +75,7 @@
                 <button
                     type="button"
                     aria-label="Ảnh sau"
-                    class="shrink-0 rounded-full p-2 text-wedding-cream transition hover:bg-white/10"
+                    class="shrink-0 rounded-full p-2 text-wedding-cream-warm transition hover:bg-white/10"
                     @click="next"
                 >
                     <svg
@@ -103,7 +103,7 @@
                     :class="[
                         'h-2 w-2 rounded-full transition-all',
                         i === currentIndex
-                            ? 'w-6 bg-wedding-gold'
+                            ? 'w-6 bg-wedding-gold-warm'
                             : 'bg-wedding-cream/50 hover:bg-wedding-cream/80',
                     ]"
                     @click="goTo(i)"
