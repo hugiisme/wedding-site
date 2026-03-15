@@ -36,11 +36,26 @@
                         class="absolute right-4 top-4 rounded-full p-2 text-white hover:bg-white/20"
                         @click="lightboxUrl = null"
                     >
-                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                            class="h-8 w-8"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
                         </svg>
                     </button>
-                    <img :src="lightboxUrl" alt="Xem ảnh" class="max-h-full max-w-full object-contain" @click.stop />
+                    <img
+                        :src="lightboxUrl"
+                        alt="Xem ảnh"
+                        class="max-h-full max-w-full object-contain"
+                        @click.stop
+                    />
                 </div>
             </Transition>
         </Teleport>
@@ -56,11 +71,17 @@ function log(...args) {
     if (DEBUG_S7) console.log("[Section7]", ...args);
 }
 
-const filmModules = import.meta.glob("../../elements/film/*.{jpg,jpeg,png,webp}", { eager: true, as: "url" });
-const fallbackModules = import.meta.glob("../../elements/*.{jpg,jpeg,png,webp}", { eager: true, as: "url" });
+const filmModules = import.meta.glob(
+    "../../elements/film/*.{jpg,jpeg,png,webp}",
+    { eager: true, as: "url" },
+);
+const fallbackModules = import.meta.glob(
+    "../../elements/*.{jpg,jpeg,png,webp}",
+    { eager: true, as: "url" },
+);
 const filmUrls = Object.values(filmModules);
 const fallbackUrls = Object.values(fallbackModules).filter(
-    (url) => !url.includes("film-strip-graphic-element-frame")
+    (url) => !url.includes("film-strip-graphic-element-frame"),
 );
 const images = ref(
     filmUrls.length > 0
@@ -71,7 +92,7 @@ const images = ref(
                 "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80",
                 "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&q=80",
                 "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80",
-            ]
+            ],
 );
 
 const MAX_CELLS_AUTO = 12;
@@ -79,7 +100,9 @@ const displayImages = computed(() => {
     const list = images.value.slice(0, MAX_CELLS_AUTO);
     return list.length ? [...list, ...list] : [];
 });
-const displayImageCount = computed(() => Math.min(MAX_CELLS_AUTO, images.value.length) || 1);
+const displayImageCount = computed(
+    () => Math.min(MAX_CELLS_AUTO, images.value.length) || 1,
+);
 const cellWidth = "280px";
 const lightboxUrl = ref(null);
 
@@ -112,10 +135,19 @@ function tick(now) {
     if (segmentWidthPx <= 0) {
         const before = performance.now();
         segmentWidthPx = track.scrollWidth / 2;
-        if (DEBUG_S7 && tickLogCount < 2) log("tick: tính segmentWidthPx trong RAF =", segmentWidthPx, "reflow mất", (performance.now() - before).toFixed(2), "ms");
+        if (DEBUG_S7 && tickLogCount < 2)
+            log(
+                "tick: tính segmentWidthPx trong RAF =",
+                segmentWidthPx,
+                "reflow mất",
+                (performance.now() - before).toFixed(2),
+                "ms",
+            );
         tickLogCount++;
     }
-    const dtSec = lastTickTime ? Math.min((now - lastTickTime) / 1000, DT_CAP_MS / 1000) : 1 / 60;
+    const dtSec = lastTickTime
+        ? Math.min((now - lastTickTime) / 1000, DT_CAP_MS / 1000)
+        : 1 / 60;
     lastTickTime = now;
     scrollPosition -= PX_PER_SECOND * dtSec;
     if (scrollPosition <= -segmentWidthPx) scrollPosition += segmentWidthPx;
@@ -137,7 +169,15 @@ function warmupTrack() {
     segmentWidthPx = track.scrollWidth / 2;
     warmedUp = true;
     const t1 = performance.now();
-    log("warmupTrack: scrollWidth =", track.scrollWidth, "segmentWidthPx =", segmentWidthPx, "reflow mất", (t1 - t0).toFixed(2), "ms");
+    log(
+        "warmupTrack: scrollWidth =",
+        track.scrollWidth,
+        "segmentWidthPx =",
+        segmentWidthPx,
+        "reflow mất",
+        (t1 - t0).toFixed(2),
+        "ms",
+    );
 }
 
 function startAnimation() {
@@ -150,12 +190,20 @@ function startAnimation() {
     }
     if (segmentWidthPx <= 0) {
         segmentWidthPx = track.scrollWidth / 2;
-        log("startAnimation: tính segmentWidthPx lần đầu =", segmentWidthPx, "(có thể gây reflow khi scroll vào)");
+        log(
+            "startAnimation: tính segmentWidthPx lần đầu =",
+            segmentWidthPx,
+            "(có thể gây reflow khi scroll vào)",
+        );
     }
     animRunning = true;
     lastTickTime = 0;
     rafId = requestAnimationFrame(tick);
-    log("startAnimation: bắt đầu sau", (performance.now() - t0).toFixed(2), "ms");
+    log(
+        "startAnimation: bắt đầu sau",
+        (performance.now() - t0).toFixed(2),
+        "ms",
+    );
 }
 
 function stopAnimation() {
@@ -180,7 +228,9 @@ onMounted(() => {
                 warmupTrack();
                 log("early warmup: segmentWidthPx đã set =", segmentWidthPx);
             } else {
-                log("early warmup: track chưa có (Vue chưa render?), sẽ warmup khi section vào view");
+                log(
+                    "early warmup: track chưa có (Vue chưa render?), sẽ warmup khi section vào view",
+                );
             }
         });
     });
@@ -190,18 +240,24 @@ onMounted(() => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     log("section IN viewport");
-                    if (sectionInViewTimeout) clearTimeout(sectionInViewTimeout);
+                    if (sectionInViewTimeout)
+                        clearTimeout(sectionInViewTimeout);
                     sectionInView.value = true;
                     const scheduleWarmup = () => {
                         if (typeof requestIdleCallback !== "undefined") {
-                            requestIdleCallback(() => warmupTrack(), { timeout: 80 });
+                            requestIdleCallback(() => warmupTrack(), {
+                                timeout: 80,
+                            });
                         } else {
                             setTimeout(warmupTrack, 50);
                         }
                     };
                     scheduleWarmup();
                     if (animStartDelayTimer) clearTimeout(animStartDelayTimer);
-                    animStartDelayTimer = setTimeout(startAnimation, ANIM_START_DELAY_MS);
+                    animStartDelayTimer = setTimeout(
+                        startAnimation,
+                        ANIM_START_DELAY_MS,
+                    );
                 } else {
                     log("section OUT viewport");
                     sectionInViewTimeout = setTimeout(() => {
@@ -211,18 +267,20 @@ onMounted(() => {
                 }
             });
         },
-        { root: null, rootMargin: "0px", threshold: 0.1 }
+        { root: null, rootMargin: "0px", threshold: 0.1 },
     );
     preloadIo = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    log("preload: section gần viewport (280px), gọi warmupTrack");
+                    log(
+                        "preload: section gần viewport (280px), gọi warmupTrack",
+                    );
                     requestAnimationFrame(warmupTrack);
                 }
             });
         },
-        { root: null, rootMargin: "280px 0px", threshold: 0 }
+        { root: null, rootMargin: "280px 0px", threshold: 0 },
     );
     preloadIo.observe(el);
     sectionIo.observe(el);

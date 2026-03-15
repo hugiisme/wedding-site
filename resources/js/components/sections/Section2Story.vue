@@ -4,12 +4,12 @@
         class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col bg-wedding-sage md:flex-row"
     >
         <div
-            class="reveal reveal--image relative h-64 w-full shrink-0 overflow-hidden bg-wedding-sage md:h-screen md:min-h-0 md:w-1/2"
+            class="reveal reveal--image relative h-[min(42vh,16rem)] min-h-44 w-full shrink-0 overflow-hidden bg-wedding-sage md:h-screen md:min-h-0 md:w-1/2"
         >
             <img
                 :src="coupleImage"
                 alt="Cô dâu chú rể"
-                class="h-full w-full object-cover object-center"
+                class="h-full w-full object-cover object-[50%_33%] md:object-center"
             />
         </div>
         <div

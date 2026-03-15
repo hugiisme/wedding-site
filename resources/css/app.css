@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -28,6 +28,8 @@ body {
         "Noto Color Emoji";
     --font-script: "Great Vibes", cursive;
     --font-dm-serif: "DM Serif Display", serif;
+    --font-doodle: "Caveat", cursive;
+    --font-cartoon: "Nunito", sans-serif;
     /* Wedding palette (mới – xanh lá nhạt) */
     --color-wedding-cream: #f2f1eb;
     --color-wedding-sage: #ced0ab;
@@ -134,6 +136,12 @@ body {
     }
     .font-dm-serif {
         font-family: var(--font-dm-serif);
+    }
+    .font-doodle {
+        font-family: var(--font-doodle);
+    }
+    .font-cartoon {
+        font-family: var(--font-cartoon);
     }
     .ring-wedding-gold {
         --tw-ring-color: var(--color-wedding-gold);
