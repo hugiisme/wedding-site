@@ -7,74 +7,21 @@
         class="section-7 flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center overflow-hidden px-0 py-12"
     >
         <div class="filmstrip relative w-full">
-            <!-- Mode auto: track chạy liên tục, loop vô tận bằng JS (không reset CSS nên không thấy "end") -->
-            <template v-if="mode === 'auto'">
-                <div class="relative w-full overflow-hidden py-6 md:py-8">
-                    <div ref="trackRef" class="film-track flex">
-                        <FilmStripCell
-                            v-for="(url, idx) in displayImages"
-                            :key="`auto-${idx}-${url}`"
-                            :src="url"
-                            :alt="`Ảnh ${(idx % limitedImages.length) + 1}`"
-                            :cell-width="cellWidth"
-                            cell-height="18rem"
-                            gap-width="20px"
-                            :show-gap="idx < displayImages.length - 1"
-                            @click="openLightbox(url)"
-                        />
-                    </div>
+            <div class="relative w-full overflow-hidden py-6 md:py-8">
+                <div ref="trackRef" class="film-track flex">
+                    <FilmStripCell
+                        v-for="(url, idx) in displayImages"
+                        :key="`auto-${idx}-${url}`"
+                        :src="url"
+                        :alt="`Ảnh ${(idx % displayImageCount) + 1}`"
+                        :cell-width="cellWidth"
+                        cell-height="18rem"
+                        gap-width="20px"
+                        :show-gap="idx < displayImages.length - 1"
+                        @click="openLightbox(url)"
+                    />
                 </div>
-            </template>
-            <!-- Mode manual: 1 ảnh, arrow + pagination, 3s tự đổi -->
-            <template v-else>
-                <div class="relative mx-auto w-full max-w-4xl px-4 py-6 md:py-8">
-                    <button
-                        type="button"
-                        aria-label="Ảnh trước"
-                        class="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full p-2 text-wedding-brown-warm transition hover:bg-black/10"
-                        @click="prev"
-                    >
-                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <div class="mx-auto flex max-w-xl justify-center px-12">
-                        <FilmStripCell
-                            v-if="currentSrc"
-                            :src="currentSrc"
-                            :alt="`Ảnh ${currentIndex + 1}`"
-                            cell-width="100%"
-                            cell-height="18rem"
-                            gap-width="0"
-                            :show-gap="false"
-                            @click="openLightbox(currentSrc)"
-                        />
-                    </div>
-                    <button
-                        type="button"
-                        aria-label="Ảnh sau"
-                        class="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full p-2 text-wedding-brown-warm transition hover:bg-black/10"
-                        @click="next"
-                    >
-                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                    <div class="mt-6 flex flex-wrap justify-center gap-2 px-2">
-                        <button
-                            v-for="(_, i) in limitedImages"
-                            :key="i"
-                            type="button"
-                            :aria-label="`Ảnh ${i + 1}`"
-                            :class="[
-                                'h-2 rounded-full transition-all',
-                                i === currentIndex ? 'w-6 bg-wedding-gold-warm' : 'w-2 bg-wedding-brown-warm/40 hover:bg-wedding-brown-warm/70',
-                            ]"
-                            @click="goTo(i)"
-                        />
-                    </div>
-                </div>
-            </template>
+            </div>
         </div>
         <Teleport to="body">
             <Transition name="lightbox">
@@ -101,12 +48,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import FilmStripCell from "./FilmStripCell.vue";
 
-// auto = ảnh tự động chạy liên tục từ phải sang trái
-// manual = pagination, 3s tự đổi ảnh, có arrow sang ảnh khác
-const mode = ref("auto"); // 'manual'/'auto'
+const DEBUG_S7 = false;
+function log(...args) {
+    if (DEBUG_S7) console.log("[Section7]", ...args);
+}
 
 const filmModules = import.meta.glob("../../elements/film/*.{jpg,jpeg,png,webp}", { eager: true, as: "url" });
 const fallbackModules = import.meta.glob("../../elements/*.{jpg,jpeg,png,webp}", { eager: true, as: "url" });
@@ -126,17 +74,13 @@ const images = ref(
             ]
 );
 
-// Giới hạn số ảnh để tránh quá nhiều DOM (auto) và quá nhiều dots (manual)
-const MAX_IMAGES_MANUAL = 20;
-const MAX_CELLS_AUTO = 12; // số ảnh dùng cho auto (sẽ nhân đôi = 24 ô)
-const limitedImages = computed(() => images.value.slice(0, MAX_IMAGES_MANUAL));
+const MAX_CELLS_AUTO = 12;
 const displayImages = computed(() => {
     const list = images.value.slice(0, MAX_CELLS_AUTO);
     return list.length ? [...list, ...list] : [];
 });
+const displayImageCount = computed(() => Math.min(MAX_CELLS_AUTO, images.value.length) || 1);
 const cellWidth = "280px";
-const currentIndex = ref(0);
-const currentSrc = computed(() => limitedImages.value[currentIndex.value] ?? null);
 const lightboxUrl = ref(null);
 
 const sectionRef = ref(null);
@@ -144,58 +88,36 @@ const trackRef = ref(null);
 const sectionInView = ref(false);
 let sectionInViewTimeout = null;
 const ANIM_START_DELAY_MS = 280;
-const PX_PER_FRAME = 1.2;
+const PX_PER_SECOND = 72;
+const DT_CAP_MS = 80;
 let animRunning = false;
 let rafId = null;
 let scrollPosition = 0;
 let segmentWidthPx = 0;
+let lastTickTime = 0;
 let warmedUp = false;
 
-function next() {
-    const n = limitedImages.value.length;
-    if (!n) return;
-    currentIndex.value = (currentIndex.value + 1) % n;
-}
-function prev() {
-    const n = limitedImages.value.length;
-    if (!n) return;
-    currentIndex.value = (currentIndex.value - 1 + n) % n;
-}
-function goTo(i) {
-    currentIndex.value = Math.max(0, Math.min(i, limitedImages.value.length - 1));
-}
 function openLightbox(url) {
     lightboxUrl.value = url;
 }
-
-let manualInterval;
-watch(
-    mode,
-    (m) => {
-        if (manualInterval) clearInterval(manualInterval);
-        if (m === "manual") {
-            manualInterval = setInterval(next, 3000);
-            stopAnimation();
-        } else if (m === "auto" && sectionInView.value) {
-            if (animStartDelayTimer) clearTimeout(animStartDelayTimer);
-            animStartDelayTimer = setTimeout(startAnimation, ANIM_START_DELAY_MS);
-        }
-    },
-    { immediate: true }
-);
-onUnmounted(() => clearInterval(manualInterval));
 
 let sectionIo = null;
 let preloadIo = null;
 let animStartDelayTimer = null;
 
-function tick() {
+let tickLogCount = 0;
+function tick(now) {
     const track = trackRef.value;
-    if (!track || !sectionInView.value || mode.value !== "auto") return;
+    if (!track || !sectionInView.value) return;
     if (segmentWidthPx <= 0) {
+        const before = performance.now();
         segmentWidthPx = track.scrollWidth / 2;
+        if (DEBUG_S7 && tickLogCount < 2) log("tick: tính segmentWidthPx trong RAF =", segmentWidthPx, "reflow mất", (performance.now() - before).toFixed(2), "ms");
+        tickLogCount++;
     }
-    scrollPosition -= PX_PER_FRAME;
+    const dtSec = lastTickTime ? Math.min((now - lastTickTime) / 1000, DT_CAP_MS / 1000) : 1 / 60;
+    lastTickTime = now;
+    scrollPosition -= PX_PER_SECOND * dtSec;
     if (scrollPosition <= -segmentWidthPx) scrollPosition += segmentWidthPx;
     track.style.transform = `translate3d(${scrollPosition}px, 0, 0)`;
     rafId = requestAnimationFrame(tick);
@@ -203,18 +125,37 @@ function tick() {
 
 function warmupTrack() {
     const track = trackRef.value;
-    if (!track || warmedUp) return;
+    const t0 = performance.now();
+    if (!track) {
+        log("warmupTrack: trackRef chưa có, bỏ qua");
+        return;
+    }
+    if (warmedUp) {
+        log("warmupTrack: đã warmup rồi, segmentWidthPx =", segmentWidthPx);
+        return;
+    }
     segmentWidthPx = track.scrollWidth / 2;
     warmedUp = true;
+    const t1 = performance.now();
+    log("warmupTrack: scrollWidth =", track.scrollWidth, "segmentWidthPx =", segmentWidthPx, "reflow mất", (t1 - t0).toFixed(2), "ms");
 }
 
 function startAnimation() {
-    if (animRunning || mode.value !== "auto") return;
+    const t0 = performance.now();
+    if (animRunning) return;
     const track = trackRef.value;
-    if (!track) return;
-    if (segmentWidthPx <= 0) segmentWidthPx = track.scrollWidth / 2;
+    if (!track) {
+        log("startAnimation: trackRef null");
+        return;
+    }
+    if (segmentWidthPx <= 0) {
+        segmentWidthPx = track.scrollWidth / 2;
+        log("startAnimation: tính segmentWidthPx lần đầu =", segmentWidthPx, "(có thể gây reflow khi scroll vào)");
+    }
     animRunning = true;
+    lastTickTime = 0;
     rafId = requestAnimationFrame(tick);
+    log("startAnimation: bắt đầu sau", (performance.now() - t0).toFixed(2), "ms");
 }
 
 function stopAnimation() {
@@ -227,19 +168,42 @@ function stopAnimation() {
 
 onMounted(() => {
     const el = sectionRef.value;
+    log("onMounted: sectionRef =", !!el, "trackRef =", !!trackRef.value);
     if (!el) return;
+
+    // Tính toán ngay từ đầu khi load trang: measure track sau khi DOM sẵn sàng (nextTick + rAF)
+    nextTick(() => {
+        requestAnimationFrame(() => {
+            const track = trackRef.value;
+            log("early warmup (sau nextTick+rAF): trackRef =", !!track);
+            if (track) {
+                warmupTrack();
+                log("early warmup: segmentWidthPx đã set =", segmentWidthPx);
+            } else {
+                log("early warmup: track chưa có (Vue chưa render?), sẽ warmup khi section vào view");
+            }
+        });
+    });
+
     sectionIo = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
+                    log("section IN viewport");
                     if (sectionInViewTimeout) clearTimeout(sectionInViewTimeout);
                     sectionInView.value = true;
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(warmupTrack);
-                    });
+                    const scheduleWarmup = () => {
+                        if (typeof requestIdleCallback !== "undefined") {
+                            requestIdleCallback(() => warmupTrack(), { timeout: 80 });
+                        } else {
+                            setTimeout(warmupTrack, 50);
+                        }
+                    };
+                    scheduleWarmup();
                     if (animStartDelayTimer) clearTimeout(animStartDelayTimer);
                     animStartDelayTimer = setTimeout(startAnimation, ANIM_START_DELAY_MS);
                 } else {
+                    log("section OUT viewport");
                     sectionInViewTimeout = setTimeout(() => {
                         sectionInView.value = false;
                         stopAnimation();
@@ -252,10 +216,13 @@ onMounted(() => {
     preloadIo = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) requestAnimationFrame(warmupTrack);
+                if (entry.isIntersecting) {
+                    log("preload: section gần viewport (280px), gọi warmupTrack");
+                    requestAnimationFrame(warmupTrack);
+                }
             });
         },
-        { root: null, rootMargin: "150px 0px", threshold: 0 }
+        { root: null, rootMargin: "280px 0px", threshold: 0 }
     );
     preloadIo.observe(el);
     sectionIo.observe(el);
@@ -272,6 +239,8 @@ onUnmounted(() => {
 <style scoped>
 .section-7 {
     background-color: #4a3f35;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100vh;
 }
 .film-track {
     will-change: transform;

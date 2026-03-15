@@ -1,5 +1,8 @@
 <template>
-    <div class="film-strip-cell flex shrink-0 items-stretch overflow-hidden">
+    <div
+        class="film-strip-cell overflow-hidden"
+        :class="showGap ? 'flex shrink-0 items-stretch' : 'block w-full'"
+    >
         <div
             class="frame-wrapper relative cursor-pointer overflow-hidden rounded-sm bg-white isolate"
             :style="{
