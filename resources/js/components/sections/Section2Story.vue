@@ -38,7 +38,7 @@
                 Và hôm nay — chúng mình chọn nhau cho cả cuộc đời.
             </p>
             <p class="reveal mt-10 font-sans text-sm italic text-wedding-brown-warm/80 md:text-base">
-                — Thanh & Thu
+                — Thành & Thư
             </p>
         </div>
     </section>

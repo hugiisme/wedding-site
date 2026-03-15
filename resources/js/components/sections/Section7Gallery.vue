@@ -63,9 +63,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from "vue";
 import FilmStripCell from "./FilmStripCell.vue";
 
+/**
+ * Debug Section 7: set true để xem log warmup, measureTrack, startAnimation, tick-skip, lightbox.
+ * Sau khi sửa xong nhớ set lại false.
+ */
 const DEBUG_S7 = false;
 function log(...args) {
     if (DEBUG_S7) console.log("[Section7]", ...args);
@@ -110,7 +114,7 @@ const sectionRef = ref(null);
 const trackRef = ref(null);
 const sectionInView = ref(false);
 let sectionInViewTimeout = null;
-const ANIM_START_DELAY_MS = 280;
+const ANIM_START_DELAY_MS = 320;
 const PX_PER_SECOND = 72;
 const DT_CAP_MS = 80;
 let animRunning = false;
@@ -119,31 +123,33 @@ let scrollPosition = 0;
 let segmentWidthPx = 0;
 let lastTickTime = 0;
 let warmedUp = false;
+/** Đã schedule startAnimation khi track ready (ResizeObserver), tránh gọi trùng */
+let startScheduled = false;
 
 function openLightbox(url) {
-    lightboxUrl.value = url;
+    // Trì hoãn cập nhật DOM lightbox sang frame tiếp theo để tránh reflow cùng lúc với film strip → giảm giật
+    requestAnimationFrame(() => {
+        lightboxUrl.value = url;
+        if (DEBUG_S7) log("lightbox open (deferred to rAF):", url?.slice(-30));
+    });
 }
 
 let sectionIo = null;
 let preloadIo = null;
 let animStartDelayTimer = null;
+let resizeObserver = null;
 
-let tickLogCount = 0;
+/**
+ * tick() không bao giờ đọc track.scrollWidth — reflow trong RAF loop gây giật khi scroll vào section.
+ * segmentWidthPx phải luôn được set trước (warmup / ResizeObserver).
+ */
 function tick(now) {
     const track = trackRef.value;
     if (!track || !sectionInView.value) return;
     if (segmentWidthPx <= 0) {
-        const before = performance.now();
-        segmentWidthPx = track.scrollWidth / 2;
-        if (DEBUG_S7 && tickLogCount < 2)
-            log(
-                "tick: tính segmentWidthPx trong RAF =",
-                segmentWidthPx,
-                "reflow mất",
-                (performance.now() - before).toFixed(2),
-                "ms",
-            );
-        tickLogCount++;
+        if (DEBUG_S7) log("tick: segmentWidthPx chưa có, skip frame (tránh reflow trong tick)");
+        rafId = requestAnimationFrame(tick);
+        return;
     }
     const dtSec = lastTickTime
         ? Math.min((now - lastTickTime) / 1000, DT_CAP_MS / 1000)
@@ -155,33 +161,35 @@ function tick(now) {
     rafId = requestAnimationFrame(tick);
 }
 
+function measureTrack() {
+    const track = trackRef.value;
+    if (!track) return false;
+    const w = track.scrollWidth;
+    if (w <= 0) return false;
+    const t0 = performance.now();
+    segmentWidthPx = w / 2;
+    warmedUp = true;
+    if (DEBUG_S7) log("measureTrack: scrollWidth =", w, "segmentWidthPx =", segmentWidthPx, "reflow ~", (performance.now() - t0).toFixed(2), "ms");
+    return true;
+}
+
 function warmupTrack() {
     const track = trackRef.value;
-    const t0 = performance.now();
     if (!track) {
         log("warmupTrack: trackRef chưa có, bỏ qua");
         return;
     }
     if (warmedUp) {
-        log("warmupTrack: đã warmup rồi, segmentWidthPx =", segmentWidthPx);
+        log("warmupTrack: đã warmup, segmentWidthPx =", segmentWidthPx);
         return;
     }
-    segmentWidthPx = track.scrollWidth / 2;
-    warmedUp = true;
-    const t1 = performance.now();
-    log(
-        "warmupTrack: scrollWidth =",
-        track.scrollWidth,
-        "segmentWidthPx =",
-        segmentWidthPx,
-        "reflow mất",
-        (t1 - t0).toFixed(2),
-        "ms",
-    );
+    measureTrack();
 }
 
+/**
+ * Chỉ start khi segmentWidthPx > 0. Nếu chưa có thì ResizeObserver sẽ gọi lại khi track ready.
+ */
 function startAnimation() {
-    const t0 = performance.now();
     if (animRunning) return;
     const track = trackRef.value;
     if (!track) {
@@ -189,21 +197,19 @@ function startAnimation() {
         return;
     }
     if (segmentWidthPx <= 0) {
-        segmentWidthPx = track.scrollWidth / 2;
-        log(
-            "startAnimation: tính segmentWidthPx lần đầu =",
-            segmentWidthPx,
-            "(có thể gây reflow khi scroll vào)",
-        );
+        if (measureTrack()) {
+            if (DEBUG_S7) log("startAnimation: measure ngay trong start (lần đầu)");
+        } else {
+            log("startAnimation: segmentWidthPx = 0, chờ ResizeObserver (tránh reflow khi scroll vào)");
+            startScheduled = true;
+            return;
+        }
     }
+    startScheduled = false;
     animRunning = true;
     lastTickTime = 0;
     rafId = requestAnimationFrame(tick);
-    log(
-        "startAnimation: bắt đầu sau",
-        (performance.now() - t0).toFixed(2),
-        "ms",
-    );
+    log("startAnimation: bắt đầu, segmentWidthPx =", segmentWidthPx);
 }
 
 function stopAnimation() {
@@ -214,23 +220,29 @@ function stopAnimation() {
     }
 }
 
+function onTrackReady() {
+    if (!sectionInView.value || animRunning) return;
+    if (segmentWidthPx <= 0 && !measureTrack()) return;
+    if (startScheduled) {
+        startScheduled = false;
+        startAnimation();
+    }
+}
+
 onMounted(() => {
     const el = sectionRef.value;
     log("onMounted: sectionRef =", !!el, "trackRef =", !!trackRef.value);
     if (!el) return;
 
-    // Tính toán ngay từ đầu khi load trang: measure track sau khi DOM sẵn sàng (nextTick + rAF)
     nextTick(() => {
         requestAnimationFrame(() => {
             const track = trackRef.value;
-            log("early warmup (sau nextTick+rAF): trackRef =", !!track);
+            log("early warmup (nextTick+rAF): trackRef =", !!track);
             if (track) {
                 warmupTrack();
-                log("early warmup: segmentWidthPx đã set =", segmentWidthPx);
+                log("early warmup: segmentWidthPx =", segmentWidthPx);
             } else {
-                log(
-                    "early warmup: track chưa có (Vue chưa render?), sẽ warmup khi section vào view",
-                );
+                log("early warmup: track chưa có (Vue chưa render), warmup khi section vào view / ResizeObserver");
             }
         });
     });
@@ -240,24 +252,19 @@ onMounted(() => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     log("section IN viewport");
-                    if (sectionInViewTimeout)
-                        clearTimeout(sectionInViewTimeout);
+                    if (sectionInViewTimeout) clearTimeout(sectionInViewTimeout);
                     sectionInView.value = true;
+                    startScheduled = true;
                     const scheduleWarmup = () => {
                         if (typeof requestIdleCallback !== "undefined") {
-                            requestIdleCallback(() => warmupTrack(), {
-                                timeout: 80,
-                            });
+                            requestIdleCallback(() => warmupTrack(), { timeout: 80 });
                         } else {
                             setTimeout(warmupTrack, 50);
                         }
                     };
                     scheduleWarmup();
                     if (animStartDelayTimer) clearTimeout(animStartDelayTimer);
-                    animStartDelayTimer = setTimeout(
-                        startAnimation,
-                        ANIM_START_DELAY_MS,
-                    );
+                    animStartDelayTimer = setTimeout(startAnimation, ANIM_START_DELAY_MS);
                 } else {
                     log("section OUT viewport");
                     sectionInViewTimeout = setTimeout(() => {
@@ -273,9 +280,7 @@ onMounted(() => {
         (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    log(
-                        "preload: section gần viewport (280px), gọi warmupTrack",
-                    );
+                    log("preload: section gần viewport 280px, warmupTrack");
                     requestAnimationFrame(warmupTrack);
                 }
             });
@@ -285,10 +290,29 @@ onMounted(() => {
     preloadIo.observe(el);
     sectionIo.observe(el);
 });
+
+watch(
+    trackRef,
+    (track) => {
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+            resizeObserver = null;
+        }
+        if (!track) return;
+        resizeObserver = new ResizeObserver(() => {
+            if (measureTrack()) onTrackReady();
+        });
+        resizeObserver.observe(track);
+        if (DEBUG_S7) log("ResizeObserver attached to track");
+    },
+    { immediate: true },
+);
+
 onUnmounted(() => {
     if (sectionInViewTimeout) clearTimeout(sectionInViewTimeout);
     if (animStartDelayTimer) clearTimeout(animStartDelayTimer);
     stopAnimation();
+    resizeObserver?.disconnect();
     sectionIo?.disconnect();
     preloadIo?.disconnect();
 });
@@ -297,8 +321,7 @@ onUnmounted(() => {
 <style scoped>
 .section-7 {
     background-color: #4a3f35;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 100vh;
+    /* Không dùng content-visibility: auto để tránh layout “thình lình” khi scroll tới → giật snap */
 }
 .film-track {
     will-change: transform;

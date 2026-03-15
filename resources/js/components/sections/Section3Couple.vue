@@ -24,7 +24,7 @@
                         <p
                             class="font-serif text-base font-semibold text-wedding-brown-warm md:text-xl"
                         >
-                            Thành
+                            Bùi Tiến Thành
                         </p>
                         <p
                             class="mt-0.5 text-xs text-wedding-brown-warm/80 md:text-sm"
@@ -34,7 +34,7 @@
                         <p
                             class="mt-1.5 text-xs text-wedding-brown-warm/70 md:mt-2 md:text-sm"
                         >
-                            Ngày sinh:
+                            Ngày sinh: 03/05/2000
                             <span class="text-wedding-brown-warm/50">—</span>
                         </p>
                     </div>

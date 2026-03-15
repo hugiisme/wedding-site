@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,400..700;1,400..700&display=swap");
+/* subset latin-ext,vietnamese để có dấu tiếng Việt (ă, â, đ, ê, ô, ơ, ư, v.v.) */
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,400..700;1,400..700&display=swap&subset=latin-ext,vietnamese");
 @import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -26,6 +27,8 @@ body {
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+    /* font-serif dùng DM Serif Display để hiển thị đúng tiếng Việt (Section 3, 5, 6, v.v.) */
+    --font-serif: "DM Serif Display", Georgia, serif;
     --font-script: "Great Vibes", cursive;
     --font-dm-serif: "DM Serif Display", serif;
     --font-doodle: "Caveat", cursive;
