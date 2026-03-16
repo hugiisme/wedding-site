@@ -20,7 +20,7 @@
                     v-if="src"
                     :src="src"
                     :alt="alt"
-                    loading="lazy"
+                    decoding="async"
                     class="h-full w-full object-cover object-center"
                     style="clip-path: inset(5% 0 5% 0);"
                 />

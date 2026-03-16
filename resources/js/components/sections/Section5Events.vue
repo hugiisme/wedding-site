@@ -9,9 +9,20 @@
             >
                 Thông tin sự kiện
             </h2>
-            <div class="reveal mx-auto mt-4 max-w-2xl text-center font-sans text-wedding-brown md:text-lg" lang="vi">
-                <p>Khoảnh khắc đặc biệt này chỉ thực sự trọn vẹn khi có bạn cùng sẻ chia.</p>
-                <p class="mt-2">Gia đình đã dành trọn tâm huyết chuẩn bị từng chi tiết nhỏ, với mong muốn mang lại không gian tiệc trọn vẹn nhất để tiếp đón những người thân thương. Mời bạn cùng điểm qua các thông tin chi tiết cho buổi tiệc sắp tới tại đây.</p>
+            <div
+                class="reveal mx-auto mt-4 max-w-2xl text-center font-sans text-wedding-brown md:text-lg"
+                lang="vi"
+            >
+                <p>
+                    Khoảnh khắc đặc biệt này chỉ thực sự trọn vẹn khi có bạn
+                    cùng sẻ chia.
+                </p>
+                <p class="mt-2">
+                    Gia đình đã dành trọn tâm huyết chuẩn bị từng chi tiết nhỏ,
+                    với mong muốn mang lại không gian tiệc trọn vẹn nhất để tiếp
+                    đón những người thân thương. Mời bạn cùng điểm qua các thông
+                    tin chi tiết cho buổi tiệc sắp tới tại đây.
+                </p>
             </div>
             <div class="reveal mt-10 grid w-full grid-cols-3 gap-2">
                 <button
@@ -27,8 +38,8 @@
                     @click="selectedId = ev.id"
                 >
                     <span class="text-2xl">{{ ev.icon }}</span>
-                    <span class="mt-2 font-semibold">{{ ev.name }}</span>
-                    <span class="mt-1 text-center text-sm opacity-90"
+                    <span class="mt-2 font-serif font-semibold">{{ ev.name }}</span>
+                    <span class="mt-1 text-center text-sm font-serif opacity-90"
                         >{{ ev.time }} - {{ ev.date }}</span
                     >
                 </button>
@@ -50,7 +61,9 @@
                     >
                         {{ selected.detail.content }}
                     </p>
-                    <p class="mt-4 text-base font-medium text-wedding-brown md:text-lg">
+                    <p
+                        class="mt-4 text-base font-medium text-wedding-brown md:text-lg"
+                    >
                         {{ selected.detail.placeName }}
                     </p>
                     <p class="mt-1 text-sm text-wedding-brown/80 md:text-base">
@@ -73,7 +86,6 @@
                         :src="selected.detail.embedUrl"
                         class="h-full w-full"
                         allowfullscreen
-                        loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         title="Bản đồ"
                     />
@@ -102,6 +114,24 @@ function mapSearchUrl(address) {
 // Sắp xếp theo trình tự thời gian: Lễ vu quy (07:00) → Lễ thành hôn (08:03) → Tiệc cưới (11:00)
 const events = ref([
     {
+        id: "tiec",
+        name: "Tiệc cưới",
+        date: "03/04/2026",
+        time: "11:00",
+        icon: "🍽️",
+        detail: {
+            title: "Tiệc cưới",
+            content:
+                "11 giờ 00 phút ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
+            time: "11 giờ 00",
+            placeName:
+                "Hội trường tầng 2 - Long Vĩ Palace Wedding & Convention",
+            address: "3A P. Đào Duy Anh, Phương Mai, Đống Đa, Hà Nội, Việt Nam",
+            mapUrl: mapSearchUrl("Nhà Hàng LONG VĨ"),
+            embedUrl: mapEmbedUrl("Nhà Hàng LONG VĨ"),
+        },
+    },
+    {
         id: "vuquy",
         name: "Lễ vu quy",
         date: "03/04/2026",
@@ -110,10 +140,11 @@ const events = ref([
         detail: {
             title: "Lễ vu quy",
             content:
-                "07 giờ 00 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
+                "07 giờ 00 phút ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
             time: "07 giờ 00",
             placeName: "Tư gia nhà gái",
-            address: "Số 15, ngõ 120, đường Trần Duy Hưng, Yên Hoà, Hà Nội",
+            address:
+                "Số 15, ngõ 120, đường Trần Duy Hưng, Phường Yên Hoà, Quận Cầu Giấy, Hà Nội",
             mapUrl: mapSearchUrl(
                 "Bibo Mart, 120 Đ. Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội 100000, Việt Nam",
             ),
@@ -131,7 +162,7 @@ const events = ref([
         detail: {
             title: "Lễ thành hôn",
             content:
-                "08 giờ 03 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
+                "08 giờ 00 phút 03 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
             time: "08 giờ 03",
             placeName: "Tư gia nhà trai",
             address:
@@ -142,24 +173,6 @@ const events = ref([
             embedUrl: mapEmbedUrl(
                 "Biệt thự Solasta Mansion, XP8V+3WF, Dương Kinh, Hà Đông, Hà Nội, Việt Nam",
             ),
-        },
-    },
-    {
-        id: "tiec",
-        name: "Tiệc cưới",
-        date: "03/04/2026",
-        time: "11:00",
-        icon: "🍽️",
-        detail: {
-            title: "Tiệc cưới",
-            content:
-                "11 giờ 00 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
-            time: "11 giờ 00",
-            placeName:
-                "Hội trường tầng 2 - Long Vĩ Palace Wedding & Convention",
-            address: "3A Đào Duy Anh, Kim Liên, Hà Nội",
-            mapUrl: mapSearchUrl("3A Đào Duy Anh, Kim Liên, Hà Nội"),
-            embedUrl: mapEmbedUrl("3A Đào Duy Anh, Kim Liên, Hà Nội"),
         },
     },
 ]);

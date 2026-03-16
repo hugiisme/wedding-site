@@ -9,7 +9,7 @@
             >
                 Xác nhận tham dự
             </h2>
-            <p v-if="!submitted" class="reveal mt-3 text-center font-sans text-sm text-wedding-brown-warm/90 md:text-base" lang="vi">
+            <p v-if="!submitted" class="reveal mt-3 text-center font-serif text-sm text-wedding-brown-warm/90 md:text-base" lang="vi">
                 Rất mong được đón bạn trong ngày vui của chúng mình.
             </p>
             <!-- Card cảm ơn sau khi xác nhận thành công (không dùng .reveal vì nội dung mới sau submit, observer không chạy lại) -->
@@ -20,7 +20,7 @@
                 <p class="font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl" lang="vi">
                     Cảm ơn bạn đã xác nhận!
                 </p>
-                <p class="mt-4 font-sans text-wedding-brown-warm/90 md:text-lg" lang="vi">
+                <p class="mt-4 font-serif text-wedding-brown-warm/90 md:text-lg" lang="vi">
                     Chúng mình rất mong được gặp bạn trong ngày vui.
                 </p>
             </div>

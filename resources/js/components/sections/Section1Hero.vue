@@ -10,6 +10,7 @@
             muted
             loop
             playsinline
+            preload="metadata"
             :src="heroVideo"
         />
         <div

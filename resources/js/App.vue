@@ -2,7 +2,7 @@
     <div class="relative flex h-screen w-full overflow-x-hidden">
         <SideNav
             :active-index="activeSectionIndex"
-            :total="8"
+            :total="7"
             @go="scrollToSection"
         />
         <main
@@ -11,7 +11,6 @@
         >
             <Section1Hero />
             <Section2Story />
-            <Section3Couple />
             <Section4Countdown />
             <Section5Events />
             <Section6RSVP />
@@ -24,10 +23,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useScrollReveal } from "./composables/useScrollReveal";
+import { usePreloadImages } from "./composables/usePreloadImages";
+import { allImageUrls } from "./imageManifest";
 import SideNav from "./components/SideNav.vue";
 import Section1Hero from "./components/sections/Section1Hero.vue";
 import Section2Story from "./components/sections/Section2Story.vue";
-import Section3Couple from "./components/sections/Section3Couple.vue";
 import Section4Countdown from "./components/sections/Section4Countdown.vue";
 import Section5Events from "./components/sections/Section5Events.vue";
 import Section6RSVP from "./components/sections/Section6RSVP.vue";
@@ -39,6 +39,9 @@ const activeSectionIndex = ref(0);
 
 // Truyền getter để useScrollReveal nhận đúng scroll container sau khi mount
 useScrollReveal({ root: () => scrollContainerRef.value });
+
+// Preload toàn bộ ảnh ngay khi trang mount để scroll-snap qua các section mượt hơn
+usePreloadImages(allImageUrls);
 
 function scrollToSection(index) {
     const container = scrollContainerRef.value;
