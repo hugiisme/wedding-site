@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-ChCk4oHF.css",
+    "file": "assets/app-xf2-t9-6.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,23 +9,22 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-B7EwHV1L.js",
+    "file": "assets/app-CJxBov3p.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-W0APoxu2.css"
+      "assets/app-CnVeyDCN.css"
     ],
     "assets": [
-      "assets/202603160026-BR1JyrhK.mp4",
       "assets/TAH09800-DJQAI628.jpg",
-      "assets/LEI02879-D6Nlo_N-.jpg",
       "assets/sect8-DoReTpti.jpg",
       "assets/LEI02780 thêm-CzWmGqIu.jpg",
       "assets/LEI02785-Ca0hdl12.jpg",
       "assets/LEI02821-BWRl4jTm.jpg",
       "assets/LEI02841-C83hpzMH.jpg",
       "assets/LEI02842-D_hXMK7l.jpg",
+      "assets/LEI02879-D6Nlo_N-.jpg",
       "assets/LEI02910 thêm-B2svz46t.jpg",
       "assets/LEI02990 thêm-jIsBfVWH.jpg",
       "assets/LEI03080 thêm-BHWTIabX.jpg",
@@ -75,7 +74,8 @@
       "assets/TAH09885-xNS1mWiF.jpg",
       "assets/TAH09892-CaoEwjre.jpg",
       "assets/TAH09951-DAJyxrOZ.jpg",
-      "assets/shape-templates-1-film-strip-graphic-element-frame-black-DRv-9Y7_.webp"
+      "assets/shape-templates-1-film-strip-graphic-element-frame-black-DRv-9Y7_.webp",
+      "assets/202603160026-BR1JyrhK.mp4"
     ]
   },
   "resources/js/elements/202603160026.mp4": {
