@@ -4,7 +4,7 @@
         class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col bg-wedding-sage md:flex-row"
     >
         <div
-            class="reveal reveal--image relative h-[min(42vh,16rem)] min-h-44 w-full shrink-0 overflow-hidden bg-wedding-sage md:h-screen md:min-h-0 md:w-1/2"
+            class="reveal reveal--image relative h-[min(55vh,22rem)] min-h-44 w-full shrink-0 overflow-hidden bg-wedding-sage md:h-screen md:min-h-0 md:w-1/2"
         >
             <img
                 :src="coupleImage"
@@ -13,13 +13,13 @@
             />
         </div>
         <div
-            class="flex flex-1 flex-col justify-center bg-wedding-sage px-8 py-14 text-left md:px-14 md:py-20 lg:px-20"
+            class="flex flex-1 flex-col justify-center bg-wedding-sage px-8 pt-8 pb-14 text-left md:px-14 md:py-20 lg:px-20"
         >
             <p class="reveal font-script text-xl text-wedding-brown-warm md:text-2xl hidden">
                 Câu chuyện của chúng mình
             </p>
             <h2
-                class="reveal mt-2 font-serif text-3xl font-semibold tracking-wider text-wedding-gold-warm md:text-4xl"
+                class="reveal mt-2 font-noto-thin text-3xl tracking-wider text-wedding-gold-warm md:text-4xl"
                 lang="vi"
             >
                 <span class="block">LỜI HỨA</span>
@@ -30,14 +30,14 @@
                 aria-hidden="true"
             />
             <p
-                class="reveal mt-4 max-w-lg font-serif text-base leading-[1.8] text-wedding-brown-warm/95 md:text-lg"
+                class="reveal mt-4 max-w-lg font-noto-thin text-base leading-[1.8] text-wedding-brown-warm/95 md:text-lg"
                 lang="vi"
             >
                 Gặp nhau từ những năm tháng cấp ba,<br />
                 Nhiều năm làm bạn, hai năm yêu,<br />
                 Và hôm nay — chúng mình chọn nhau cho cả cuộc đời.
             </p>
-            <p class="reveal mt-10 font-serif text-sm italic text-wedding-brown-warm/80 md:text-base">
+            <p class="reveal mt-10 font-noto-thin text-sm italic text-wedding-brown-warm/80 md:text-base">
                 — Tiến Thành & Anh Thư
             </p>
         </div>

@@ -17,15 +17,22 @@
             <Section7Gallery />
             <Section8Closing />
         </main>
+        <PreloadOverlay
+            :show="showOverlay"
+            :loaded="loaded"
+            :total="total"
+            :progress="displayProgress"
+        />
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useScrollReveal } from "./composables/useScrollReveal";
-import { usePreloadImages } from "./composables/usePreloadImages";
+import { usePreloadImagesWithStatus } from "./composables/usePreloadImagesWithStatus";
 import { allImageUrls } from "./imageManifest";
 import SideNav from "./components/SideNav.vue";
+import PreloadOverlay from "./components/PreloadOverlay.vue";
 import Section1Hero from "./components/sections/Section1Hero.vue";
 import Section2Story from "./components/sections/Section2Story.vue";
 import Section4Countdown from "./components/sections/Section4Countdown.vue";
@@ -36,12 +43,40 @@ import Section8Closing from "./components/sections/Section8Closing.vue";
 
 const scrollContainerRef = ref(null);
 const activeSectionIndex = ref(0);
+const displayProgress = ref(0);
+const canHideOverlay = ref(false);
 
 // Truyền getter để useScrollReveal nhận đúng scroll container sau khi mount
 useScrollReveal({ root: () => scrollContainerRef.value });
 
 // Preload toàn bộ ảnh ngay khi trang mount để scroll-snap qua các section mượt hơn
-usePreloadImages(allImageUrls);
+const { loaded, total, done, progress } = usePreloadImagesWithStatus(allImageUrls);
+
+// Hiển thị overlay cho tới khi có tín hiệu ẩn
+const showOverlay = computed(() => !canHideOverlay.value);
+
+// Đồng bộ progress thực tế sang progress hiển thị (displayProgress) một cách mượt
+watch(
+    progress,
+    (val) => {
+        const next = Math.max(0, Math.min(1, val ?? 0));
+        if (next > displayProgress.value) {
+            displayProgress.value = next;
+        }
+    },
+    { immediate: true },
+);
+
+// Khi preload thực sự xong và progress đã đầy, cho phép ẩn overlay ngay (không chờ timeout)
+watch(
+    [done, displayProgress],
+    ([isDone, uiProgress]) => {
+        if (isDone && uiProgress >= 1) {
+            canHideOverlay.value = true;
+        }
+    },
+    { immediate: true },
+);
 
 function scrollToSection(index) {
     const container = scrollContainerRef.value;
@@ -70,6 +105,37 @@ function updateActiveSection() {
 }
 
 onMounted(() => {
+    // Ẩn skeleton overlay HTML tĩnh (nếu có) ngay khi Vue app mount
+    const initialOverlay = document.getElementById("initial-preload-overlay");
+    if (initialOverlay) {
+        initialOverlay.style.display = "none";
+    }
+
+    // Timeout tối đa cho overlay để tránh chặn người dùng trên mạng yếu
+    const timeoutMs = 20000;
+    window.setTimeout(() => {
+        if (displayProgress.value < 1) {
+            const start = displayProgress.value;
+            const duration = 1200;
+            const startTime = performance.now();
+
+            const animate = (now) => {
+                const elapsed = now - startTime;
+                const t = Math.min(1, elapsed / duration);
+                displayProgress.value = start + (1 - start) * t;
+                if (t < 1) {
+                    window.requestAnimationFrame(animate);
+                } else {
+                    canHideOverlay.value = true;
+                }
+            };
+
+            window.requestAnimationFrame(animate);
+        } else {
+            canHideOverlay.value = true;
+        }
+    }, timeoutMs);
+
     const container = scrollContainerRef.value;
     if (container) {
         container.addEventListener("scroll", updateActiveSection, {

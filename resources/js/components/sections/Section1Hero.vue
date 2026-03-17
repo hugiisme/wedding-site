@@ -3,14 +3,14 @@
         data-section
         class="relative flex min-h-screen w-full shrink-0 snap-start snap-always items-center justify-center overflow-hidden bg-wedding-brown"
     >
-        <!-- Video: đặt file MP4 trong public/elements/ (tên không dấu cách, ví dụ: wedding-hero.mp4) -->
         <video
             class="absolute inset-0 h-full w-full object-cover opacity-60"
             autoplay
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="auto"
+            :poster="heroPoster"
             :src="heroVideo"
         />
         <div
@@ -39,4 +39,5 @@
 
 <script setup>
 import heroVideo from "../../elements/202603160026.mp4";
+import heroPoster from "../../elements/poster.png";
 </script>

@@ -5,7 +5,7 @@
     >
         <div class="mx-auto w-full max-w-6xl">
             <h2
-                class="reveal text-center font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl"
+                class="reveal text-center font-noto-thin text-2xl text-wedding-gold-warm md:text-3xl"
             >
                 Thông tin sự kiện
             </h2>
@@ -38,8 +38,8 @@
                     @click="selectedId = ev.id"
                 >
                     <span class="text-2xl">{{ ev.icon }}</span>
-                    <span class="mt-2 font-serif font-semibold">{{ ev.name }}</span>
-                    <span class="mt-1 text-center text-sm font-serif opacity-90"
+                    <span class="mt-2 font-noto-thin">{{ ev.name }}</span>
+                    <span class="mt-1 text-center text-sm font-noto-thin opacity-90"
                         >{{ ev.time }} - {{ ev.date }}</span
                     >
                 </button>
@@ -52,7 +52,7 @@
                     class="reveal flex min-h-64 min-w-0 max-w-[420px] flex-col rounded-xl border border-wedding-sage/50 bg-white p-6 shadow-sm md:min-h-80 lg:max-w-none"
                 >
                     <h3
-                        class="font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl"
+                        class="font-noto-thin text-2xl text-wedding-gold-warm md:text-3xl"
                     >
                         {{ selected.detail.title }}
                     </h3>
