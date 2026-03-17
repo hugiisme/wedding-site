@@ -30,7 +30,9 @@
             >
                 THANH & THU
             </h1>
-            <p class="mt-2 font-script text-2xl text-wedding-cream-warm md:text-3xl">
+            <p
+                class="mt-2 font-script text-2xl text-wedding-cream-warm md:text-3xl"
+            >
                 are getting married
             </p>
         </div>
@@ -38,6 +40,6 @@
 </template>
 
 <script setup>
-import heroVideo from "../../elements/202603160026.mp4";
+import heroVideo from "../../elements/compressed_vid.mp4";
 import heroPoster from "../../elements/poster.png";
 </script>

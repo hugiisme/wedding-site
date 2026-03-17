@@ -8,7 +8,7 @@
     <title>Thiệp mời cưới —  Thành &amp; Thư | 03.04.2026</title>
     <meta name="description" content="Thiệp mời tham dự lễ vu quy và tiệc cưới Thành &amp; Thư. 03 tháng 04 năm 2026. Rất mong được đón bạn trong ngày vui của chúng mình.">
     {{-- Preload media quan trọng để giảm giật lần đầu khi scroll --}}
-    <link rel="preload" as="video" href="{{ Vite::asset('resources/js/elements/202603160026.mp4') }}">
+    <link rel="preload" as="video" href="{{ Vite::asset('resources/js/elements/compressed_vid.mp4') }}">
     <link rel="preload" as="image" href="{{ Vite::asset('resources/js/elements/section_2.webp') }}">
     <link rel="preload" as="image" href="{{ Vite::asset('resources/js/elements/section_8.webp') }}">
     @vite(['resources/css/app.css','resources/js/app.js'])
