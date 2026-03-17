@@ -19,25 +19,25 @@
                 Câu chuyện của chúng mình
             </p>
             <h2
-                class="reveal mt-2 font-noto-thin text-3xl tracking-wider text-wedding-gold-warm md:text-4xl"
+                class="reveal mt-2 font-noto-thin text-4xl tracking-wider text-white md:text-5xl"
                 lang="vi"
             >
                 <span class="block">LỜI HỨA</span>
                 <span class="block mt-1 pl-8 md:pl-10">TRỌN ĐỜI</span>
             </h2>
             <div
-                class="reveal mt-6 h-0.5 w-28 bg-wedding-gold-warm/50 md:w-36"
+                class="reveal mt-6 h-0.5 w-28 bg-white/80 md:w-36"
                 aria-hidden="true"
             />
             <p
-                class="reveal mt-4 max-w-lg font-noto-thin text-base leading-[1.8] text-wedding-brown-warm/95 md:text-lg"
+                class="reveal mt-4 max-w-lg font-noto-thin text-lg leading-[1.8] text-white/90 md:text-xl"
                 lang="vi"
             >
                 Gặp nhau từ những năm tháng cấp ba,<br />
                 Nhiều năm làm bạn, hai năm yêu,<br />
                 Và hôm nay — chúng mình chọn nhau cho cả cuộc đời.
             </p>
-            <p class="reveal mt-10 font-noto-thin text-sm italic text-wedding-brown-warm/80 md:text-base">
+            <p class="reveal mt-10 font-noto-thin text-base italic text-white/80 md:text-lg">
                 — Tiến Thành & Anh Thư
             </p>
         </div>
@@ -45,5 +45,5 @@
 </template>
 
 <script setup>
-import coupleImage from "../../elements/TAH09800.jpg";
+import coupleImage from "../../elements/section_2.webp";
 </script>

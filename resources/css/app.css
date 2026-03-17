@@ -155,6 +155,11 @@ body {
         font-style: normal;
         font-variation-settings: "wdth" 100;
     }
+    @media (min-width: 768px) {
+        .font-noto-thin {
+            font-weight: 400;
+        }
+    }
     .ring-wedding-gold {
         --tw-ring-color: var(--color-wedding-gold);
     }

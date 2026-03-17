@@ -18,6 +18,15 @@
                 Lướt qua những hình ảnh đáng nhớ trong hành trình của hai đứa
                 mình.
             </p>
+            <p class="mt-4 text-center font-serif text-sm text-wedding-cream-warm/90 md:text-base">
+                <RouterLink
+                    to="/image-gallery"
+                    class="inline-flex items-center gap-1 underline-offset-4 hover:underline"
+                >
+                    <span>Xem toàn bộ album ảnh</span>
+                    <span aria-hidden="true">→</span>
+                </RouterLink>
+            </p>
             <div class="mt-8">
                 <div class="relative" ref="carouselRef">
                     <button
@@ -151,8 +160,8 @@
 
 <script setup>
 import { ref, computed, nextTick, onMounted, onUnmounted } from "vue";
+import { RouterLink } from "vue-router";
 import { usePreloadImages } from "../../composables/usePreloadImages";
-import { allImageUrls } from "../../imageManifest";
 
 const modules = import.meta.glob(
     "../../elements/film/*.{jpg,jpeg,png,webp}",
@@ -193,7 +202,7 @@ const trackRef = ref(null);
 const isJumping = ref(false);
 
 // Preload thêm cho chắc chắn mọi ảnh trong carousel đã được cache
-usePreloadImages(allImageUrls);
+usePreloadImages(allUrls);
 
 const trackStyle = computed(() => {
     const widthPerSlide = 100 / 3;

@@ -5,7 +5,7 @@
     >
         <div class="absolute inset-0">
                 <img
-                src="../../elements/sect8.jpg"
+                src="../../elements/section_8.webp"
                     alt="Cô dâu chú rể"
                     class="h-full w-full object-cover opacity-40"
                 />

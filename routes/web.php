@@ -8,6 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/image-gallery', function () {
+    return view('welcome');
+});
+
 Route::post('/api/rsvp', [RsvpController::class, 'store']);
 
 // Trang tổng hợp & thống kê phản hồi RSVP (truy cập qua URL, không có link điều hướng)

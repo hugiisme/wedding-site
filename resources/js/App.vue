@@ -105,12 +105,6 @@ function updateActiveSection() {
 }
 
 onMounted(() => {
-    // Ẩn skeleton overlay HTML tĩnh (nếu có) ngay khi Vue app mount
-    const initialOverlay = document.getElementById("initial-preload-overlay");
-    if (initialOverlay) {
-        initialOverlay.style.display = "none";
-    }
-
     // Timeout tối đa cho overlay để tránh chặn người dùng trên mạng yếu
     const timeoutMs = 20000;
     window.setTimeout(() => {
