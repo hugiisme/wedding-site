@@ -1,7 +1,7 @@
 <template>
     <section
         data-section
-        class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center bg-wedding-sage px-4 py-12 md:py-16"
+        class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center bg-wedding-sage px-4 py-10 md:py-16"
     >
         <div class="w-full max-w-xl">
             <h2
@@ -26,7 +26,7 @@
             </div>
             <form
                 v-else
-                class="reveal mt-8 rounded-2xl border border-wedding-sage/60 bg-white/95 p-6 shadow-[0_8px_30px_rgba(74,63,53,0.12)] md:p-8 md:shadow-[0_12px_40px_rgba(74,63,53,0.18)]"
+                class="reveal mt-6 rounded-2xl border border-wedding-sage/60 bg-white/95 p-5 shadow-[0_8px_30px_rgba(74,63,53,0.12)] md:mt-8 md:p-8 md:shadow-[0_12px_40px_rgba(74,63,53,0.18)]"
                 @submit.prevent="submit"
             >
                 <div class="space-y-6">

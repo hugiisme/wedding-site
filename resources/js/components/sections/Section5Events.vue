@@ -1,7 +1,7 @@
 <template>
     <section
         data-section
-        class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col bg-wedding-cream px-4 py-12 md:px-8 md:py-16"
+        class="flex min-h-screen w-full shrink-0 snap-start snap-always flex-col bg-wedding-cream px-4 py-10 md:px-8 md:py-16"
     >
         <div class="mx-auto w-full max-w-6xl">
             <h2
@@ -24,7 +24,7 @@
                     tin chi tiết cho buổi tiệc sắp tới tại đây.
                 </p>
             </div>
-            <div class="reveal mt-10 grid w-full grid-cols-3 gap-2">
+            <div class="reveal mt-8 grid w-full grid-cols-3 gap-2">
                 <button
                     v-for="ev in events"
                     :key="ev.id"
@@ -46,7 +46,7 @@
             </div>
             <div
                 v-if="selected"
-                class="reveal mt-10 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-[minmax(260px,0.75fr)_1fr]"
+                class="reveal mt-8 grid w-full grid-cols-1 gap-5 md:mt-10 md:gap-6 md:grid-cols-2 lg:grid-cols-[minmax(260px,0.75fr)_1fr]"
             >
                 <div
                     class="reveal flex min-h-64 min-w-0 max-w-[420px] flex-col rounded-xl border border-wedding-sage/50 bg-white p-6 shadow-sm md:min-h-80 lg:max-w-none"
