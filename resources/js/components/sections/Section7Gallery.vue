@@ -88,6 +88,16 @@
                     </div>
                 </div>
             </div>
+            <p class="mt-4 text-center font-serif text-sm text-wedding-cream-warm/90 md:text-base">
+                <a
+                    href="https://drive.google.com/drive/folders/1ojNuTMLc9IroJewoK4gVYyVPn61S2y5A?usp=drive_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="underline underline-offset-4 decoration-wedding-gold-warm/70 decoration-2 hover:decoration-wedding-gold-warm/95 focus:outline-none focus-visible:ring-2 focus-visible:ring-wedding-gold-warm/60 rounded"
+                >
+                    Hoặc xem qua Google Drive
+                </a>
+            </p>
         </div>
         <Teleport to="body">
             <Transition name="lightbox">
