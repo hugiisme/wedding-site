@@ -24,7 +24,7 @@
                 
             </div>
 
-            <div class="mt-6 masonry">
+            <div ref="masonryRef" class="mt-6 masonry">
                 <div
                     v-for="(img, index) in images"
                     :key="img.src"
@@ -37,14 +37,24 @@
                     >
                         <div class="relative flex items-center justify-center">
                             <img
-                                :src="img.src"
+                                :src="
+                                    visibleSet.has(index)
+                                        ? img.src
+                                        : BLANK_IMG
+                                "
                                 :alt="img.alt"
                                 decoding="async"
+                                loading="lazy"
+                                :fetchpriority="index < 4 ? 'high' : 'low'"
+                                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                                :data-index="index"
                                 class="gallery-image transition-all duration-500 ease-out group-hover:scale-[1.02]"
                                 :class="
-                                    isLoaded(index)
-                                        ? 'blur-0 opacity-100 scale-100'
-                                        : 'blur-sm opacity-80 scale-[1.03]'
+                                    !visibleSet.has(index)
+                                        ? 'opacity-0'
+                                        : isLoaded(index)
+                                          ? 'blur-0 opacity-100 scale-100'
+                                          : 'opacity-80 scale-[1.02]'
                                 "
                                 @load="handleLoaded(index)"
                             />
@@ -86,6 +96,9 @@
                             <img
                                 :src="currentImage?.src"
                                 :alt="currentImage?.alt || 'Ảnh kỷ niệm'"
+                                decoding="async"
+                                loading="eager"
+                                fetchpriority="high"
                                 class="max-h-[80vh] w-full max-w-full object-contain"
                             />
                         </div>
@@ -127,9 +140,15 @@ const images = allUrls.map((src, index) => ({
 const lightboxIndex = ref(null);
 const router = useRouter();
 const loadedSet = ref(new Set());
+const visibleSet = ref(new Set());
+const masonryRef = ref(null);
+let observer = null;
 
 let previousHtmlOverflow = "";
 let previousBodyOverflow = "";
+
+// 1x1 transparent GIF để tránh request thừa khi ảnh chưa vào viewport
+const BLANK_IMG = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
 
 onMounted(() => {
     const html = document.documentElement;
@@ -138,9 +157,48 @@ onMounted(() => {
     previousBodyOverflow = body.style.overflow;
     html.style.overflow = "";
     body.style.overflow = "auto";
+
+    // Prime a few images so the top isn't blank on iOS
+    for (let i = 0; i < Math.min(6, images.length); i++) {
+        visibleSet.value.add(i);
+    }
+
+    // IntersectionObserver: chỉ set src khi ảnh sắp vào tầm nhìn
+    if ("IntersectionObserver" in window && masonryRef.value) {
+        const imgEls = Array.from(
+            masonryRef.value.querySelectorAll("img[data-index]"),
+        );
+
+        observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (!entry.isIntersecting) continue;
+                    const el = entry.target;
+                    const idx = Number(el.getAttribute("data-index"));
+                    if (Number.isNaN(idx)) continue;
+                    visibleSet.value.add(idx);
+                    observer?.unobserve(el);
+                }
+            },
+            {
+                root: null,
+                rootMargin: "300px 0px",
+                threshold: 0.01,
+            },
+        );
+
+        imgEls.forEach((el) => observer?.observe(el));
+    } else {
+        // Fallback: nếu không có IntersectionObserver thì load đủ ảnh
+        for (let i = 0; i < images.length; i++) {
+            visibleSet.value.add(i);
+        }
+    }
 });
 
 onUnmounted(() => {
+    if (observer) observer.disconnect();
+
     const html = document.documentElement;
     const body = document.body;
     html.style.overflow = previousHtmlOverflow;
@@ -164,6 +222,8 @@ function goBack() {
 }
 
 function handleLoaded(index) {
+    // Chỉ mark loaded thật khi ảnh đã được phép set src
+    if (!visibleSet.value.has(index)) return;
     loadedSet.value.add(index);
 }
 
@@ -198,7 +258,7 @@ function isLoaded(index) {
 .gallery-image {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     max-height: 20rem;
     object-fit: cover;
 }
