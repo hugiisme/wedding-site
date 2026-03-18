@@ -85,7 +85,7 @@
             </div>
         </div>
         <p
-            class="reveal relative z-10 mt-8 max-w-xs text-center mea-culpa-regular text-2xl text-wedding-brown-warm md:mt-16 md:max-w-3xl md:text-5xl lg:text-6xl"
+            class="reveal relative z-10 mt-8 max-w-xs text-center mea-culpa-regular text-3xl leading-snug text-wedding-brown-warm md:mt-16 md:max-w-3xl md:text-5xl lg:text-6xl"
             lang="vi"
         >
             sẽ chung một mái nhà!
