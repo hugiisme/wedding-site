@@ -37,9 +37,6 @@
                 Nhiều năm làm bạn, hai năm yêu,<br />
                 Và hôm nay — chúng mình chọn nhau cho cả cuộc đời.
             </p>
-            <p class="reveal mt-10 font-noto-thin text-base italic text-white/80 md:text-lg">
-                — Tiến Thành & Anh Thư
-            </p>
         </div>
     </section>
 </template>
