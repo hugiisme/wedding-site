@@ -307,32 +307,31 @@ const submittedTitle = computed(() => {
     const data = lastSubmitted.value;
     const name = (data?.name ?? "").trim();
     const suffix = name ? `, ${name}` : "";
-
-    if (!data?.attending) return `Cảm ơn bạn đã xác nhận${suffix}!`;
-    if (data.attending === "no") return `Cảm ơn bạn đã báo lại${suffix}!`;
-    return `Hẹn gặp bạn trong ngày vui${suffix}!`;
+    return `Cảm ơn bạn đã dành thời gian phản hồi${suffix}!`;
 });
 
 const submittedBody = computed(() => {
     const data = lastSubmitted.value;
+    const name = (data?.name ?? "").trim();
+    const namePart = name ? ` ${name}` : "";
+
     if (!data?.attending) return "Chúng mình rất mong được gặp bạn trong ngày vui.";
 
     if (data.attending === "no") {
-        return "Chúng mình sẽ nhớ bạn. Cảm ơn bạn đã dành thời gian phản hồi, hẹn dịp gần nhất gặp lại nhé.";
+        return "Cảm ơn đã chúc phúc cho chúng mình nhé!";
     }
 
     // attending === "yes"
-    if (!data.ceremony_attendance) {
-        return "Cảm ơn bạn đã xác nhận tham dự. Chúng mình rất mong được gặp bạn trong ngày vui.";
+    if (
+        data.ceremony_attendance === "send_bride" ||
+        data.ceremony_attendance === "receive_bride"
+    ) {
+        // Có tham dự cưới và có tham gia đưa/đón dâu
+        return "Chúng mình rất mong được gặp bạn trong ngày vui.";
     }
 
-    if (data.ceremony_attendance === "send_bride") {
-        return "Tuyệt quá! Cảm ơn bạn đã xác nhận tham dự và đi đưa dâu cùng tụi mình. Hẹn gặp bạn nhé.";
-    }
-    if (data.ceremony_attendance === "receive_bride") {
-        return "Tuyệt quá! Cảm ơn bạn đã xác nhận tham dự và đi đón dâu cùng tụi mình. Hẹn gặp bạn nhé.";
-    }
-    return "Cảm ơn bạn đã xác nhận tham dự. Nếu bạn không tiện dự lễ gia tiên thì mình vẫn rất mong được gặp bạn ở phần còn lại của ngày vui.";
+    // Có tham dự cưới nhưng không đi đưa/đón dâu
+    return `Cảm ơn bạn${namePart} đã dành thời gian chung vui cùng chúng mình!`;
 });
 
 function goBack() {
