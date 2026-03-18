@@ -142,11 +142,15 @@ onUnmounted(() => clearInterval(interval));
 }
 
 .section4-pattern {
-    background-image: url("../../elements/pattern.webp");
-    /* Fill the whole section with the pattern image */
-    background-size: 100% 100%;
+    /* Tạo pattern bằng CSS thay vì dùng ảnh tĩnh */
+    background-image: radial-gradient(
+        circle,
+        rgba(206, 208, 171, 0.35) 1px,
+        transparent 1px
+    );
+    /* Khoảng cách giữa các chấm (tile pattern) */
+    background-size: 22px 22px;
     background-repeat: repeat;
-    opacity: 0.35;
 }
 
 .section4-section2-overlay {
@@ -157,10 +161,8 @@ onUnmounted(() => clearInterval(interval));
 
 @media (max-width: 767px) {
     .section4-pattern {
-        /* Prevent stretching (mobile should keep the pattern aspect ratio) */
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+        /* Pattern nhỏ hơn để nhìn rõ trên mobile */
+        background-size: 18px 18px;
     }
 }
 </style>
