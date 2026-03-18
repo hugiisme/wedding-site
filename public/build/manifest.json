@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-JwgFPKxQ.css",
+    "file": "assets/app-yQj1kBMs.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,12 +9,12 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BVSjUiSp.js",
+    "file": "assets/app-B5U_LQ4R.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-CPAHNu1J.css"
+      "assets/app-ChUoc_Xp.css"
     ],
     "assets": [
       "assets/avnfkphflfzgay2jpbh4-BHrQvZPM.webp",
@@ -74,6 +74,7 @@
       "assets/zhasynz5326xavru2b6b-BJvPU_jQ.webp",
       "assets/gkr1uzdumkyicuya5qd8-BzoMrYbK.webp",
       "assets/zocse02abz5xmkbjdr2z-CyIGtTBk.webp",
+      "assets/pattern-CydKIa-W.webp",
       "assets/poster-C0N5TviM.png",
       "assets/compressed_vid-GxtsceDZ.mp4"
     ]
@@ -389,6 +390,10 @@
   "resources/js/elements/film/zxx4argmcei6zjrvs2ba.webp": {
     "file": "assets/n2yhi6iulcys0l1cuewf-B5tDutjW.webp",
     "src": "resources/js/elements/Gallery/n2yhi6iulcys0l1cuewf.webp"
+  },
+  "resources/js/elements/pattern.webp": {
+    "file": "assets/pattern-CydKIa-W.webp",
+    "src": "resources/js/elements/pattern.webp"
   },
   "resources/js/elements/poster.png": {
     "file": "assets/poster-C0N5TviM.png",
