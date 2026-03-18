@@ -154,4 +154,13 @@ onUnmounted(() => clearInterval(interval));
     background-color: rgba(206, 208, 171, 0.26); /* #ced0ab with opacity */
     mix-blend-mode: multiply;
 }
+
+@media (max-width: 767px) {
+    .section4-pattern {
+        /* Prevent stretching (mobile should keep the pattern aspect ratio) */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
 </style>

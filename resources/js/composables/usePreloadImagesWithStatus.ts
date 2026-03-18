@@ -1,4 +1,4 @@
-import { onMounted, ref, computed } from "vue";
+import { onMounted, onUnmounted, ref, computed } from "vue";
 
 export function usePreloadImagesWithStatus(urls: string[]) {
     const loaded = ref(0);
@@ -10,7 +10,10 @@ export function usePreloadImagesWithStatus(urls: string[]) {
         return loaded.value / total.value;
     });
 
+    let active = true;
+
     onMounted(() => {
+        active = true;
         const uniqueUrls = Array.from(
             new Set(urls.filter((src) => typeof src === "string" && src.length)),
         );
@@ -25,6 +28,7 @@ export function usePreloadImagesWithStatus(urls: string[]) {
         uniqueUrls.forEach((src) => {
             const img = new Image();
             img.onload = img.onerror = () => {
+                if (!active) return;
                 loaded.value += 1;
                 if (loaded.value >= total.value) {
                     done.value = true;
@@ -32,6 +36,10 @@ export function usePreloadImagesWithStatus(urls: string[]) {
             };
             img.src = src;
         });
+    });
+
+    onUnmounted(() => {
+        active = false;
     });
 
     return {

@@ -45,6 +45,9 @@ const scrollContainerRef = ref(null);
 const activeSectionIndex = ref(0);
 const displayProgress = ref(0);
 const canHideOverlay = ref(false);
+let overlayTimeoutId = null;
+let overlayRafId = null;
+let cancelled = false;
 
 // Truyền getter để useScrollReveal nhận đúng scroll container sau khi mount
 useScrollReveal({ root: () => scrollContainerRef.value });
@@ -105,9 +108,11 @@ function updateActiveSection() {
 }
 
 onMounted(() => {
+    cancelled = false;
     // Timeout tối đa cho overlay để tránh chặn người dùng trên mạng yếu
     const timeoutMs = 20000;
-    window.setTimeout(() => {
+    overlayTimeoutId = window.setTimeout(() => {
+        if (cancelled) return;
         if (displayProgress.value < 1) {
             const start = displayProgress.value;
             const duration = 1200;
@@ -118,13 +123,13 @@ onMounted(() => {
                 const t = Math.min(1, elapsed / duration);
                 displayProgress.value = start + (1 - start) * t;
                 if (t < 1) {
-                    window.requestAnimationFrame(animate);
+                    overlayRafId = window.requestAnimationFrame(animate);
                 } else {
                     canHideOverlay.value = true;
                 }
             };
 
-            window.requestAnimationFrame(animate);
+            overlayRafId = window.requestAnimationFrame(animate);
         } else {
             canHideOverlay.value = true;
         }
@@ -142,5 +147,14 @@ onMounted(() => {
 onUnmounted(() => {
     const container = scrollContainerRef.value;
     if (container) container.removeEventListener("scroll", updateActiveSection);
+    cancelled = true;
+    if (overlayTimeoutId != null) {
+        window.clearTimeout(overlayTimeoutId);
+        overlayTimeoutId = null;
+    }
+    if (overlayRafId != null) {
+        window.cancelAnimationFrame(overlayRafId);
+        overlayRafId = null;
+    }
 });
 </script>
