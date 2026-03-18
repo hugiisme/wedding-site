@@ -47,19 +47,21 @@
                     class="reveal min-h-0 self-start md:self-stretch grid w-full grid-cols-1 gap-4 md:gap-4 md:grid-cols-2 lg:grid-cols-[minmax(260px,0.75fr)_1fr]"
                 >
                     <div
-                        class="reveal min-h-0 min-w-0 self-start md:self-stretch rounded-xl border border-wedding-sage/50 bg-white p-4 pb-3 shadow-sm md:rounded-xl md:p-5 md:pb-5"
+                        class="reveal min-h-0 min-w-0 self-start md:self-stretch md:h-full rounded-xl border border-wedding-sage/50 bg-white p-4 pb-3 shadow-sm md:rounded-xl md:p-5 md:pb-5"
                     >
-                        <div class="flex flex-col">
+                        <div class="flex flex-col md:h-full">
                             <h3 class="font-noto-thin font-normal text-xl text-wedding-brown md:text-2xl lg:text-3xl">
                                 {{ selected.detail.title }}
                             </h3>
-                            <p class="mt-2 whitespace-pre-line text-sm leading-[1.7] text-wedding-brown md:leading-relaxed md:text-base">
+                            <p
+                                class="mt-2 whitespace-pre-line text-sm leading-[1.7] text-wedding-brown md:mt-2 md:leading-relaxed md:text-base"
+                            >
                                 {{ selected.detail.content }}
                             </p>
-                            <p class="mt-3 text-sm font-medium text-wedding-brown md:text-base">
+                            <p class="mt-3 text-sm font-medium text-wedding-brown md:mt-3 md:text-base">
                                 {{ selected.detail.placeName }}
                             </p>
-                            <p class="mt-1 text-xs text-wedding-brown/80 md:text-sm">
+                            <p class="mt-1 text-xs text-wedding-brown/80 md:mt-1 md:text-sm">
                                 {{ selected.detail.address }}
                             </p>
                             <a
