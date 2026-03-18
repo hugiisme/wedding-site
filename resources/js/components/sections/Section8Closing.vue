@@ -13,11 +13,11 @@
         </div>
         <div class="relative z-10 max-w-xl text-center">
             <p class="reveal font-script text-3xl text-wedding-cream-warm md:text-4xl">
-                Excited to celebrate our day with you
+                Gửi đến bạn lời cảm ơn chân thành nhất
             </p>
             <p class="reveal mt-6 font-sans text-wedding-cream-warm/95 leading-relaxed">
-                In lieu of gifts, we'd be grateful for contributions toward our
-                future together.
+                Sự ủng hộ của bạn là lời chúc phúc ấm áp nhất cho khởi đầu của
+                chúng mình.
             </p>
         </div>
     </section>
