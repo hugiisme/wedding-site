@@ -5,21 +5,17 @@
             class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-wedding-brown-warm text-white"
         >
             <div class="flex flex-col items-center px-8 text-center">
-                <div
-                    class="card-bounce mb-6 flex h-24 w-32 items-center justify-center rounded-2xl border-2 border-wedding-gold-warm/80 bg-wedding-brown shadow-md"
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="card-bounce mb-6 h-20 w-20 md:h-24 md:w-24 text-wedding-gold-warm"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        class="h-12 w-12 text-wedding-gold-warm"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
-                        <path d="M4 7l8 6 8-6" />
-                    </svg>
-                </div>
+                    <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
+                    <path d="M4 7l8 6 8-6" />
+                </svg>
                 <p class="mb-3 max-w-md font-sans text-base md:text-lg">
                     Vui lòng đợi để tải những khoảnh khắc đẹp nhất của chúng mình.
                 </p>
