@@ -68,21 +68,17 @@
                                     type="button"
                                     class="group block w-full overflow-hidden rounded-xl transition-transform duration-500"
                                     :class="{
-                                        'scale-105 opacity-100 shadow-xl':
-                                            isCenter(index),
-                                        'scale-75 opacity-70':
-                                            !isCenter(index),
+                                        'scale-105 opacity-100 shadow-xl': isCenter(index),
+                                        'scale-75 opacity-70': !isCenter(index),
                                     }"
                                     @click="openLightbox(slide.originalIndex)"
                                 >
-                                    <div
-                                        class="aspect-4/5 overflow-hidden bg-black/40"
-                                    >
+                                    <div class="overflow-hidden bg-black/40">
                                         <img
                                             :src="slide.src"
                                             :alt="slide.alt"
                                             decoding="async"
-                                            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            class="w-full h-auto object-contain"
                                         />
                                     </div>
                                 </button>
