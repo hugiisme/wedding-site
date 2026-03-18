@@ -4,20 +4,28 @@
         class="flex h-screen w-full shrink-0 snap-start snap-always flex-col bg-wedding-cream px-4 py-6 md:px-8 md:py-10 overflow-hidden"
     >
         <div class="mx-auto h-full w-full max-w-6xl">
-            <div class="grid h-full grid-rows-[auto_auto_auto_1fr] gap-3 md:gap-4">
-                <h2 class="reveal text-center font-serif text-2xl tracking-tight text-wedding-gold-warm md:text-3xl uppercase font-extrabold md:font-bold">
+            <div
+                class="grid h-full grid-rows-[auto_auto_auto_1fr] gap-3 md:gap-4"
+            >
+                <h2
+                    class="reveal text-center font-serif text-2xl tracking-tight text-wedding-gold-warm md:text-3xl uppercase font-extrabold md:font-bold"
+                >
                     Thông tin sự kiện
                 </h2>
-                <div class="reveal mx-auto max-w-2xl text-center font-sans text-sm leading-[1.7] text-wedding-brown md:leading-relaxed md:text-base" lang="vi">
+                <div
+                    class="reveal mx-auto max-w-2xl text-center font-sans text-sm leading-[1.7] text-wedding-brown md:leading-relaxed md:text-base"
+                    lang="vi"
+                >
                     <p>
                         Khoảnh khắc đặc biệt này chỉ thực sự trọn vẹn khi có bạn
                         cùng sẻ chia.
                     </p>
                     <p class="mt-1 md:mt-2">
-                        Gia đình đã dành trọn tâm huyết chuẩn bị từng chi tiết nhỏ,
-                        với mong muốn mang lại không gian tiệc trọn vẹn nhất để tiếp
-                        đón những người thân thương. Mời bạn cùng điểm qua các thông
-                        tin chi tiết cho buổi tiệc sắp tới tại đây.
+                        Gia đình đã dành trọn tâm huyết chuẩn bị từng chi tiết
+                        nhỏ, với mong muốn mang lại không gian tiệc trọn vẹn
+                        nhất để tiếp đón những người thân thương. Mời bạn cùng
+                        điểm qua các thông tin chi tiết cho buổi tiệc sắp tới
+                        tại đây.
                     </p>
                 </div>
                 <div class="reveal grid w-full grid-cols-3 gap-2">
@@ -34,10 +42,14 @@
                         @click="selectedId = ev.id"
                     >
                         <span class="text-lg md:text-2xl">{{ ev.icon }}</span>
-                        <span class="mt-1 text-[11px] font-sans font-normal text-wedding-brown md:mt-2 md:text-sm lg:text-base">
+                        <span
+                            class="mt-1 text-[11px] font-sans font-normal text-wedding-brown md:mt-2 md:text-sm lg:text-base"
+                        >
                             {{ ev.name }}
                         </span>
-                        <span class="mt-1 text-center text-[10px] font-sans font-normal text-wedding-brown md:text-sm">
+                        <span
+                            class="mt-1 text-center text-[10px] font-sans font-normal text-wedding-brown md:text-sm"
+                        >
                             {{ ev.time }} - {{ ev.date }}
                         </span>
                     </button>
@@ -50,7 +62,9 @@
                         class="reveal min-h-0 min-w-0 self-start md:self-stretch md:h-full rounded-xl border border-wedding-sage/50 bg-white p-4 pb-3 shadow-sm md:rounded-xl md:p-5 md:pb-5"
                     >
                         <div class="flex flex-col md:h-full">
-                            <h3 class="font-noto-thin font-normal text-xl text-wedding-brown md:text-2xl lg:text-3xl">
+                            <h3
+                                class="font-noto-thin font-normal text-xl text-wedding-brown md:text-2xl lg:text-3xl"
+                            >
                                 {{ selected.detail.title }}
                             </h3>
                             <p
@@ -58,10 +72,14 @@
                             >
                                 {{ selected.detail.content }}
                             </p>
-                            <p class="mt-3 text-sm font-medium text-wedding-brown md:mt-3 md:text-base">
+                            <p
+                                class="mt-3 text-[13px] font-medium leading-snug text-wedding-brown whitespace-nowrap overflow-hidden text-ellipsis md:mt-3 md:text-base md:whitespace-normal md:overflow-visible"
+                            >
                                 {{ selected.detail.placeName }}
                             </p>
-                            <p class="mt-1 text-xs text-wedding-brown/80 md:mt-1 md:text-sm">
+                            <p
+                                class="mt-1 text-xs text-wedding-brown/80 md:mt-1 md:text-sm"
+                            >
                                 {{ selected.detail.address }}
                             </p>
                             <a
@@ -77,7 +95,9 @@
                     <div
                         class="reveal min-h-0 min-w-0 overflow-hidden rounded-xl border border-wedding-sage/50 md:rounded-xl"
                     >
-                        <div class="relative aspect-video min-h-0 md:aspect-auto md:h-full">
+                        <div
+                            class="relative aspect-video min-h-0 md:aspect-auto md:h-full"
+                        >
                             <iframe
                                 v-if="selected.detail.embedUrl"
                                 :src="selected.detail.embedUrl"
