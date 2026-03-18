@@ -1,14 +1,32 @@
 <template>
+    <Teleport to="head">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Mea+Culpa&display=swap"
+            rel="stylesheet"
+        />
+    </Teleport>
     <section
         data-section
         class="relative flex min-h-screen w-full shrink-0 snap-start snap-always flex-col items-center justify-center bg-wedding-sage px-4 py-12 md:px-10 md:py-24"
     >
-        <div class="absolute inset-0 opacity-30 section4-pattern" />
+        <div class="absolute inset-0 section4-pattern" />
+        <!-- Blue-tint overlay from section 2, kept semi-transparent so pattern remains visible -->
+        <div class="absolute inset-0 section4-section2-overlay" />
         <p
-            class="reveal relative z-10 max-w-xs text-center font-script text-2xl text-wedding-brown-warm md:max-w-3xl md:text-5xl lg:text-6xl"
+            class="reveal relative z-10 max-w-xs text-center mea-culpa-regular text-3xl leading-snug text-wedding-brown-warm md:max-w-3xl md:text-5xl lg:text-6xl"
             lang="vi"
         >
-            Năm ấy chung một bầu trời Chuyên Sư phạm, chỉ còn ...
+            <!-- Mobile layout: tránh bị che bằng cách đưa "Chuyên Sư phạm" xuống dòng -->
+            <span class="block md:hidden">Năm ấy chung một bầu trời</span>
+            <span class="block md:hidden">Chuyên Sư phạm, chỉ còn ...</span>
+
+            <!-- Desktop/tablet layout -->
+            <span class="hidden whitespace-nowrap md:block">
+                Năm ấy chung một bầu trời Chuyên Sư phạm,
+            </span>
+            <span class="hidden md:block">chỉ còn ...</span>
         </p>
             <div
                 class="reveal relative z-10 mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-4 md:mt-16 md:flex-nowrap md:gap-8"
@@ -67,7 +85,7 @@
             </div>
         </div>
         <p
-            class="reveal relative z-10 mt-8 max-w-xs text-center font-script text-2xl text-wedding-brown-warm md:mt-16 md:max-w-3xl md:text-5xl lg:text-6xl"
+            class="reveal relative z-10 mt-8 max-w-xs text-center mea-culpa-regular text-2xl text-wedding-brown-warm md:mt-16 md:max-w-3xl md:text-5xl lg:text-6xl"
             lang="vi"
         >
             sẽ chung một mái nhà!
@@ -117,7 +135,23 @@ onUnmounted(() => clearInterval(interval));
 </script>
 
 <style scoped>
+.mea-culpa-regular {
+    font-family: "Mea Culpa", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
 .section4-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L50 25 L35 30 L30 45 L25 30 L10 25 L25 20 Z' fill='%23f2f1eb' fill-opacity='0.3'/%3E%3C/svg%3E");
+    background-image: url("../../elements/pattern.webp");
+    /* Fill the whole section with the pattern image */
+    background-size: 100% 100%;
+    background-repeat: repeat;
+    opacity: 0.35;
+}
+
+.section4-section2-overlay {
+    /* Tint with the same “sage/blue-green” tone as section 2 */
+    background-color: rgba(206, 208, 171, 0.26); /* #ced0ab with opacity */
+    mix-blend-mode: multiply;
 }
 </style>

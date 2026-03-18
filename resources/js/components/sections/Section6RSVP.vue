@@ -6,7 +6,7 @@
     >
         <div class="w-full max-w-xl">
             <h2
-                class="reveal text-center font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl"
+                class="reveal text-center font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl uppercase"
             >
                 Xác nhận tham dự
             </h2>

@@ -5,10 +5,10 @@
     >
         <div class="mx-auto h-full w-full max-w-6xl">
             <div class="grid h-full grid-rows-[auto_auto_auto_1fr] gap-3 md:gap-4">
-                <h2 class="reveal text-center font-noto-thin text-2xl text-wedding-gold-warm md:text-3xl">
+                <h2 class="reveal text-center font-serif text-2xl tracking-tight text-wedding-gold-warm md:text-3xl uppercase font-extrabold md:font-bold">
                     Thông tin sự kiện
                 </h2>
-                <div class="reveal mx-auto max-w-2xl text-center font-sans text-sm leading-relaxed text-wedding-brown md:text-base" lang="vi">
+                <div class="reveal mx-auto max-w-2xl text-center font-sans text-sm leading-[1.7] text-wedding-brown md:leading-relaxed md:text-base" lang="vi">
                     <p>
                         Khoảnh khắc đặc biệt này chỉ thực sự trọn vẹn khi có bạn
                         cùng sẻ chia.
@@ -34,22 +34,26 @@
                         @click="selectedId = ev.id"
                     >
                         <span class="text-lg md:text-2xl">{{ ev.icon }}</span>
-                        <span class="mt-1 text-[11px] font-noto-thin md:mt-2 md:text-sm lg:text-base">{{ ev.name }}</span>
-                        <span class="mt-1 text-center text-[10px] font-noto-thin opacity-90 md:text-sm"
-                            >{{ ev.time }} - {{ ev.date }}</span
-                        >
+                        <span class="mt-1 text-[11px] font-sans font-normal text-wedding-brown md:mt-2 md:text-sm lg:text-base">
+                            {{ ev.name }}
+                        </span>
+                        <span class="mt-1 text-center text-[10px] font-sans font-normal text-wedding-brown md:text-sm">
+                            {{ ev.time }} - {{ ev.date }}
+                        </span>
                     </button>
                 </div>
                 <div
                     v-if="selected"
-                    class="reveal min-h-0 grid w-full grid-cols-1 gap-3 md:gap-4 md:grid-cols-2 lg:grid-cols-[minmax(260px,0.75fr)_1fr]"
+                    class="reveal min-h-0 self-start md:self-stretch grid w-full grid-cols-1 gap-4 md:gap-4 md:grid-cols-2 lg:grid-cols-[minmax(260px,0.75fr)_1fr]"
                 >
-                    <div class="reveal min-h-0 min-w-0 rounded-xl border border-wedding-sage/50 bg-white p-4 shadow-sm md:p-5">
-                        <div class="flex h-full min-h-0 flex-col">
-                            <h3 class="font-noto-thin text-xl text-wedding-gold-warm md:text-2xl lg:text-3xl">
+                    <div
+                        class="reveal min-h-0 min-w-0 self-start md:self-stretch rounded-xl border border-wedding-sage/50 bg-white p-4 pb-3 shadow-sm md:rounded-xl md:p-5 md:pb-5"
+                    >
+                        <div class="flex flex-col">
+                            <h3 class="font-noto-thin font-normal text-xl text-wedding-brown md:text-2xl lg:text-3xl">
                                 {{ selected.detail.title }}
                             </h3>
-                            <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-wedding-brown md:text-base">
+                            <p class="mt-2 whitespace-pre-line text-sm leading-[1.7] text-wedding-brown md:leading-relaxed md:text-base">
                                 {{ selected.detail.content }}
                             </p>
                             <p class="mt-3 text-sm font-medium text-wedding-brown md:text-base">
@@ -62,25 +66,27 @@
                                 :href="selected.detail.mapUrl"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="mt-auto inline-flex w-fit items-center gap-2 rounded-lg bg-wedding-gold-warm px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90 md:text-base"
+                                class="mt-4 inline-flex w-fit items-center gap-2 rounded-lg bg-wedding-gold-warm px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90 md:mt-auto md:text-base"
                             >
                                 Mở Google Map
                             </a>
                         </div>
                     </div>
-                    <div class="reveal min-h-0 min-w-0 overflow-hidden rounded-xl border border-wedding-sage/50">
-                        <div class="h-full min-h-0">
+                    <div
+                        class="reveal min-h-0 min-w-0 overflow-hidden rounded-xl border border-wedding-sage/50 md:rounded-xl"
+                    >
+                        <div class="relative aspect-video min-h-0 md:aspect-auto md:h-full">
                             <iframe
                                 v-if="selected.detail.embedUrl"
                                 :src="selected.detail.embedUrl"
-                                class="h-full w-full"
+                                class="absolute inset-0 h-full w-full md:static md:h-full md:w-full"
                                 allowfullscreen
                                 referrerpolicy="no-referrer-when-downgrade"
                                 title="Bản đồ"
                             />
                             <div
                                 v-else
-                                class="flex h-full items-center justify-center bg-wedding-sage/20 text-wedding-brown/60"
+                                class="absolute inset-0 flex h-full items-center justify-center bg-wedding-sage/20 text-wedding-brown/60 md:static"
                             >
                                 Chọn sự kiện để xem bản đồ
                             </div>

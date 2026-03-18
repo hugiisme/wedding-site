@@ -7,7 +7,7 @@
     >
         <div class="w-full max-w-5xl">
             <h2
-                class="text-center font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl"
+                class="text-center font-serif text-2xl font-semibold text-wedding-gold-warm md:text-3xl uppercase"
             >
                 Khoảnh khắc của chúng mình
             </h2>
