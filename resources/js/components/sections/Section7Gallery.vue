@@ -21,7 +21,8 @@
             <p class="mt-4 text-center font-serif text-sm text-wedding-cream-warm/90 md:text-base">
                 <RouterLink
                     to="/image-gallery"
-                    class="inline-flex items-center gap-1 underline-offset-4 hover:underline"
+                    aria-label="Xem toàn bộ album ảnh"
+                    class="inline-flex items-center justify-center gap-2 rounded-full bg-wedding-gold-warm px-6 py-3 font-semibold text-wedding-brown shadow-lg transition active:scale-[0.99] hover:bg-wedding-gold-warm/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-wedding-gold-warm/60"
                 >
                     <span>Xem toàn bộ album ảnh</span>
                     <span aria-hidden="true">→</span>
