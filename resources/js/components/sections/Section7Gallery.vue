@@ -54,15 +54,12 @@
                         class="overflow-hidden"
                     >
                         <div
-                            ref="trackRef"
                             class="carousel-track flex transition-transform duration-700 ease-in-out"
-                            :class="{ 'carousel-track--no-transition': isJumping }"
                             :style="trackStyle"
-                            @transitionend="onTrackTransitionEnd"
                         >
                             <div
-                                v-for="(slide, index) in slidesDoubled"
-                                :key="`${slide.originalIndex}-${index}`"
+                                v-for="(slide, index) in slides"
+                                :key="slide.id"
                                 class="shrink-0 basis-1/3 px-0"
                             >
                                 <button
@@ -72,7 +69,7 @@
                                         'scale-105 opacity-100 shadow-xl': isCenter(index),
                                         'scale-75 opacity-70': !isCenter(index),
                                     }"
-                                    @click="openLightbox(slide.originalIndex)"
+                                    @click="openLightbox(index)"
                                 >
                                     <div class="overflow-hidden bg-black/40">
                                         <img
@@ -90,7 +87,7 @@
             </div>
             <p class="mt-4 text-center font-serif text-sm text-wedding-cream-warm/90 md:text-base">
                 <a
-                    href="https://drive.google.com/drive/folders/1ojNuTMLc9IroJewoK4gVYyVPn61S2y5A?usp=drive_link"
+                    href="https://drive.google.com/drive/folders/1pothE7-Jyv9vJzWLxImVVfdYlQfkV-Lk?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="underline underline-offset-4 decoration-wedding-gold-warm/70 decoration-2 hover:decoration-wedding-gold-warm/95 focus:outline-none focus-visible:ring-2 focus-visible:ring-wedding-gold-warm/60 rounded"
@@ -166,7 +163,7 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { RouterLink } from "vue-router";
 import { usePreloadImages } from "../../composables/usePreloadImages";
 
@@ -179,12 +176,28 @@ const fallbackModules = import.meta.glob(
     { eager: true, as: "url" },
 );
 
-const urls = Object.values(modules);
-const allUrls = urls.length
-    ? urls
-    : Object.values(fallbackModules).filter(
-          (url) => !url.includes("film-strip-graphic-element-frame"),
-      );
+function extractOrderFromPath(path) {
+    const fileName = path.split("/").pop() || "";
+    const nameWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+    const match = nameWithoutExt.match(/\d+/);
+    return match ? Number.parseInt(match[0], 10) : Number.POSITIVE_INFINITY;
+}
+
+function compareByNumberedName(a, b) {
+    const orderA = extractOrderFromPath(a[0]);
+    const orderB = extractOrderFromPath(b[0]);
+    if (orderA !== orderB) return orderA - orderB;
+    return a[0].localeCompare(b[0], undefined, { numeric: true });
+}
+
+const filmEntries = Object.entries(modules).sort(compareByNumberedName);
+const fallbackEntries = Object.entries(fallbackModules)
+    .filter(([path]) => !path.includes("film-strip-graphic-element-frame"))
+    .sort(compareByNumberedName);
+
+const allUrls = (filmEntries.length ? filmEntries : fallbackEntries).map(
+    ([, url]) => url,
+);
 
 const slides = allUrls.map((src, index) => ({
     id: index,
@@ -192,21 +205,9 @@ const slides = allUrls.map((src, index) => ({
     alt: `Khoảnh khắc ${index + 1}`,
 }));
 
-const N = slides.length;
-// Nhân đôi để nối vòng: [slide0..slideN-1, slide0..slideN-1]
-const slidesDoubled = computed(() =>
-    [...slides, ...slides].map((s, i) => ({
-        ...s,
-        originalIndex: i % N,
-    })),
-);
-const totalDoubled = computed(() => slidesDoubled.value.length);
-
 const currentIndex = ref(0);
 const lightboxIndex = ref(null);
 const carouselRef = ref(null);
-const trackRef = ref(null);
-const isJumping = ref(false);
 
 // Preload thêm cho chắc chắn mọi ảnh trong carousel đã được cache
 usePreloadImages(allUrls);
@@ -219,47 +220,16 @@ const trackStyle = computed(() => {
     };
 });
 
-function onTrackTransitionEnd() {
-    const cur = currentIndex.value;
-    const total = totalDoubled.value;
-    if (total === 0) return;
-    // Vừa next từ ảnh cuối → đang ở 0 (clone đầu): nhảy về N để tiếp tục next mượt
-    if (cur === 0) {
-        isJumping.value = true;
-        currentIndex.value = N;
-        nextTick(() => {
-            isJumping.value = false;
-        });
-        return;
-    }
-    // Vừa prev từ ảnh đầu → đang ở 2N-1 (clone cuối): nhảy về N-1
-    if (cur === total - 1) {
-        isJumping.value = true;
-        currentIndex.value = N - 1;
-        nextTick(() => {
-            isJumping.value = false;
-        });
-    }
-}
-
 function goPrev() {
-    const total = totalDoubled.value;
+    const total = slides.length;
     if (total === 0) return;
-    if (currentIndex.value === 0) {
-        currentIndex.value = total - 1; // sang clone cuối, sau đó transitionend sẽ reset về N-1
-    } else {
-        currentIndex.value = currentIndex.value - 1;
-    }
+    currentIndex.value = (currentIndex.value - 1 + total) % total;
 }
 
 function goNext() {
-    const total = totalDoubled.value;
+    const total = slides.length;
     if (total === 0) return;
-    if (currentIndex.value === total - 1) {
-        currentIndex.value = 0; // sang clone đầu, sau đó transitionend sẽ reset về N
-    } else {
-        currentIndex.value = currentIndex.value + 1;
-    }
+    currentIndex.value = (currentIndex.value + 1) % total;
 }
 
 function openLightbox(index) {
@@ -388,9 +358,6 @@ function handleNextClick() {
 .carousel-track {
     will-change: transform;
     backface-visibility: hidden;
-}
-.carousel-track--no-transition {
-    transition: none !important;
 }
 .lightbox-enter-active,
 .lightbox-leave-active {
