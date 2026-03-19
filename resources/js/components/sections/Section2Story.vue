@@ -13,7 +13,7 @@
             />
         </div>
         <div
-            class="flex flex-1 flex-col justify-center bg-wedding-sage px-8 pt-8 pb-14 text-left md:px-14 md:py-20 lg:px-20"
+            class="flex flex-1 flex-col justify-start bg-wedding-sage px-8 pt-8 pb-14 text-left md:justify-center md:px-14 md:py-20 lg:px-20"
         >
             <p class="reveal font-script text-xl text-wedding-brown-warm md:text-2xl hidden">
                 Câu chuyện của chúng mình
