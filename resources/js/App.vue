@@ -7,7 +7,10 @@
         />
         <main
             ref="scrollContainerRef"
-            class="scrollbar-hide h-full w-full snap-y snap-mandatory overflow-y-auto overflow-x-hidden"
+            :class="[
+                'scrollbar-hide h-full w-full overflow-y-auto overflow-x-hidden',
+                isScrollSnapEnabled && 'snap-y snap-mandatory',
+            ]"
         >
             <Section1Hero />
             <Section2Story />
@@ -48,6 +51,34 @@ const canHideOverlay = ref(false);
 let overlayTimeoutId = null;
 let overlayRafId = null;
 let cancelled = false;
+const isScrollSnapEnabled = resolveScrollSnapEnabled();
+
+function parseBooleanEnv(value, defaultValue = false) {
+    if (value == null || value === "") return defaultValue;
+    const normalized = String(value).trim().toLowerCase();
+    if (["true", "1", "yes", "on"].includes(normalized)) return true;
+    if (["false", "0", "no", "off"].includes(normalized)) return false;
+    return defaultValue;
+}
+
+function isIosDevice() {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent || "";
+    const platform = navigator.platform || "";
+    const maxTouchPoints = navigator.maxTouchPoints || 0;
+    const isIphoneOrIpadOrIpod = /iPad|iPhone|iPod/i.test(ua);
+    const isIpadOs = platform === "MacIntel" && maxTouchPoints > 1;
+    return isIphoneOrIpadOrIpod || isIpadOs;
+}
+
+function resolveScrollSnapEnabled() {
+    const envEnabled = parseBooleanEnv(
+        import.meta.env.VITE_ENABLE_SCROLL_SNAP,
+        true,
+    );
+    if (!envEnabled) return false;
+    return !isIosDevice();
+}
 
 // Truyền getter để useScrollReveal nhận đúng scroll container sau khi mount
 useScrollReveal({ root: () => scrollContainerRef.value });
