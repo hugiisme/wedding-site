@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DNdWxuVa.css",
+    "file": "assets/app-DZSUjB9q.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,7 +9,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Dul6qcI4.js",
+    "file": "assets/app-r09Rf7rb.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -90,7 +90,8 @@
       "assets/poster-C0N5TviM.png",
       "assets/section_2-C81jGSGA.webp",
       "assets/section_8-DavpLOFK.webp",
-      "assets/compressed_vid-GxtsceDZ.mp4"
+      "assets/compressed_vid-GxtsceDZ.mp4",
+      "assets/bg_music-sgmyIQVi.mp3"
     ]
   },
   "resources/js/elements/Gallery/1.webp": {
@@ -292,6 +293,10 @@
   "resources/js/elements/Gallery/9.webp": {
     "file": "assets/9-DMKbK3OQ.webp",
     "src": "resources/js/elements/Gallery/9.webp"
+  },
+  "resources/js/elements/bg_music.mp3": {
+    "file": "assets/bg_music-sgmyIQVi.mp3",
+    "src": "resources/js/elements/bg_music.mp3"
   },
   "resources/js/elements/compressed_vid.mp4": {
     "file": "assets/compressed_vid-GxtsceDZ.mp4",

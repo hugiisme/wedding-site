@@ -26,6 +26,32 @@
             :total="total"
             :progress="displayProgress"
         />
+        <div
+            v-if="autoplayBlocked && !showOverlay"
+            class="pointer-events-none fixed bottom-4 left-4 z-40 flex flex-col items-start gap-2"
+        >
+            <p
+                v-if="showAutoplayNotice"
+                class="max-w-sm rounded-lg bg-black/70 px-3 py-2 text-left text-xs text-white shadow-lg"
+            >
+                Trình duyệt không hỗ trợ tự động phát audio. Bấm vào nút dưới để thử lại.
+            </p>
+            <button
+                type="button"
+                class="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-wedding-gold-warm text-wedding-brown-warm shadow-lg transition hover:brightness-95"
+                aria-label="Play audio"
+                @click="onPlayAudioClick"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="h-5 w-5"
+                    fill="currentColor"
+                >
+                    <path d="M8 5.14v13.72a1 1 0 001.53.85l10.45-6.86a1 1 0 000-1.68L9.53 4.3A1 1 0 008 5.14z" />
+                </svg>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -43,6 +69,7 @@ import Section5Events from "./components/sections/Section5Events.vue";
 import Section6RSVP from "./components/sections/Section6RSVP.vue";
 import Section7Gallery from "./components/sections/Section7Gallery.vue";
 import Section8Closing from "./components/sections/Section8Closing.vue";
+import bgMusicUrl from "./elements/bg_music.mp3";
 
 const scrollContainerRef = ref(null);
 const activeSectionIndex = ref(0);
@@ -51,7 +78,11 @@ const canHideOverlay = ref(false);
 let overlayTimeoutId = null;
 let overlayRafId = null;
 let cancelled = false;
+let backgroundAudio = null;
 const isScrollSnapEnabled = resolveScrollSnapEnabled();
+const autoplayBlocked = ref(false);
+const showAutoplayNotice = ref(false);
+let autoplayNoticeTimeoutId = null;
 
 function parseBooleanEnv(value, defaultValue = false) {
     if (value == null || value === "") return defaultValue;
@@ -138,8 +169,40 @@ function updateActiveSection() {
     }
 }
 
+async function playBackgroundAudio() {
+    if (!backgroundAudio) return;
+    try {
+        await backgroundAudio.play();
+        autoplayBlocked.value = false;
+        showAutoplayNotice.value = false;
+        if (autoplayNoticeTimeoutId != null) {
+            window.clearTimeout(autoplayNoticeTimeoutId);
+            autoplayNoticeTimeoutId = null;
+        }
+    } catch {
+        autoplayBlocked.value = true;
+        showAutoplayNotice.value = true;
+        if (autoplayNoticeTimeoutId != null) {
+            window.clearTimeout(autoplayNoticeTimeoutId);
+        }
+        autoplayNoticeTimeoutId = window.setTimeout(() => {
+            showAutoplayNotice.value = false;
+            autoplayNoticeTimeoutId = null;
+        }, 4000);
+    }
+}
+
+function onPlayAudioClick() {
+    showAutoplayNotice.value = false;
+    void playBackgroundAudio();
+}
+
 onMounted(() => {
     cancelled = false;
+    backgroundAudio = new Audio(bgMusicUrl);
+    backgroundAudio.loop = true;
+    backgroundAudio.preload = "auto";
+
     // Timeout tối đa cho overlay để tránh chặn người dùng trên mạng yếu
     const timeoutMs = 20000;
     overlayTimeoutId = window.setTimeout(() => {
@@ -175,6 +238,16 @@ onMounted(() => {
     }
 });
 
+watch(
+    showOverlay,
+    (isVisible) => {
+        if (!isVisible) {
+            void playBackgroundAudio();
+        }
+    },
+    { immediate: true },
+);
+
 onUnmounted(() => {
     const container = scrollContainerRef.value;
     if (container) container.removeEventListener("scroll", updateActiveSection);
@@ -187,5 +260,16 @@ onUnmounted(() => {
         window.cancelAnimationFrame(overlayRafId);
         overlayRafId = null;
     }
+    if (backgroundAudio) {
+        backgroundAudio.pause();
+        backgroundAudio.currentTime = 0;
+        backgroundAudio = null;
+    }
+    if (autoplayNoticeTimeoutId != null) {
+        window.clearTimeout(autoplayNoticeTimeoutId);
+        autoplayNoticeTimeoutId = null;
+    }
+    autoplayBlocked.value = false;
+    showAutoplayNotice.value = false;
 });
 </script>
