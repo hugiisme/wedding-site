@@ -35,7 +35,7 @@
             >
                 Gặp nhau từ những năm tháng cấp ba,<br />
                 Nhiều năm làm bạn, hai năm yêu,<br />
-                Và hôm nay — chúng mình chọn nhau cho cả cuộc đời.
+                Và hôm nay — chúng mình chọn nhau cả cuộc đời.
             </p>
         </div>
     </section>
