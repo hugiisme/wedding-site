@@ -73,7 +73,7 @@
                                 {{ selected.detail.content }}
                             </p>
                             <p
-                                class="mt-3 text-[13px] font-medium leading-snug text-wedding-brown whitespace-nowrap overflow-hidden text-ellipsis md:mt-3 md:text-base md:whitespace-normal md:overflow-visible"
+                                class="mt-3 text-[13px] font-medium leading-snug text-wedding-brown whitespace-normal wrap-break-word md:mt-3 md:text-base"
                             >
                                 {{ selected.detail.placeName }}
                             </p>
