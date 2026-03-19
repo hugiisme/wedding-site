@@ -199,7 +199,7 @@ onMounted(() => {
     backgroundAudio.preload = "auto";
 
     // Timeout tối đa cho overlay để tránh chặn người dùng trên mạng yếu
-    const timeoutMs = 20000;
+    const timeoutMs = 8000;
     overlayTimeoutId = window.setTimeout(() => {
         if (cancelled) return;
         if (displayProgress.value < 1) {
