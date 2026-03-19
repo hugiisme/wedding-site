@@ -34,7 +34,8 @@
                 v-if="showAutoplayNotice"
                 class="max-w-sm rounded-lg bg-black/70 px-3 py-2 text-left text-xs text-white shadow-lg"
             >
-                Trình duyệt không hỗ trợ tự động phát audio. Bấm vào nút dưới để thử lại.
+                Trình duyệt không hỗ trợ tự động phát audio. Bấm vào nút dưới để
+                thử lại.
             </p>
             <button
                 type="button"
@@ -48,7 +49,9 @@
                     class="h-5 w-5"
                     fill="currentColor"
                 >
-                    <path d="M8 5.14v13.72a1 1 0 001.53.85l10.45-6.86a1 1 0 000-1.68L9.53 4.3A1 1 0 008 5.14z" />
+                    <path
+                        d="M8 5.14v13.72a1 1 0 001.53.85l10.45-6.86a1 1 0 000-1.68L9.53 4.3A1 1 0 008 5.14z"
+                    />
                 </svg>
             </button>
         </div>
@@ -92,30 +95,22 @@ function parseBooleanEnv(value, defaultValue = false) {
     return defaultValue;
 }
 
-function isIosDevice() {
-    if (typeof navigator === "undefined") return false;
-    const ua = navigator.userAgent || "";
-    const platform = navigator.platform || "";
-    const maxTouchPoints = navigator.maxTouchPoints || 0;
-    const isIphoneOrIpadOrIpod = /iPad|iPhone|iPod/i.test(ua);
-    const isIpadOs = platform === "MacIntel" && maxTouchPoints > 1;
-    return isIphoneOrIpadOrIpod || isIpadOs;
-}
-
 function resolveScrollSnapEnabled() {
     const envEnabled = parseBooleanEnv(
         import.meta.env.VITE_ENABLE_SCROLL_SNAP,
         true,
     );
     if (!envEnabled) return false;
-    return !isIosDevice();
+    // return !isIosDevice();
+    return true;
 }
 
 // Truyền getter để useScrollReveal nhận đúng scroll container sau khi mount
 useScrollReveal({ root: () => scrollContainerRef.value });
 
 // Preload toàn bộ ảnh ngay khi trang mount để scroll-snap qua các section mượt hơn
-const { loaded, total, done, progress } = usePreloadImagesWithStatus(allImageUrls);
+const { loaded, total, done, progress } =
+    usePreloadImagesWithStatus(allImageUrls);
 
 // Hiển thị overlay cho tới khi có tín hiệu ẩn
 const showOverlay = computed(() => !canHideOverlay.value);
