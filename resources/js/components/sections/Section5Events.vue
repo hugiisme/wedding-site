@@ -181,8 +181,8 @@ const events = ref([
         detail: {
             title: "Lễ thành hôn",
             content:
-                "08 giờ 30 phút 03 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
-            time: "08 giờ 03",
+                "08 giờ 30 phút ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
+            time: "08 giờ 30",
             placeName: "Tư gia nhà trai",
             address:
                 "P01-28, Solasta Mansion, KĐT Dương Nội 2, Dương Nội, Hà Nội",
