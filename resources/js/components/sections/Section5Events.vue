@@ -176,12 +176,12 @@ const events = ref([
         id: "le",
         name: "Lễ thành hôn",
         date: "03/04/2026",
-        time: "08:03",
+        time: "08:30",
         icon: "💒",
         detail: {
             title: "Lễ thành hôn",
             content:
-                "08 giờ 00 phút 03 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
+                "08 giờ 30 phút 03 ngày 03 tháng 04 năm 2026\n(Tức ngày 16 tháng 02 năm Bính Ngọ)",
             time: "08 giờ 03",
             placeName: "Tư gia nhà trai",
             address:
